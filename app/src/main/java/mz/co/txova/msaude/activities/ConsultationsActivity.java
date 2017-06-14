@@ -1,5 +1,6 @@
 package mz.co.txova.msaude.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ImageButton;
@@ -52,5 +53,6 @@ public class ConsultationsActivity extends BaseAuthenticateActivity {
     @OnClick(R.id.add_new_consultation)
     public void OnclickAddNewConsultation() {
         Toast.makeText(this, "Nova consulta", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, ScheduleConsultationActivity.class));
     }
 }

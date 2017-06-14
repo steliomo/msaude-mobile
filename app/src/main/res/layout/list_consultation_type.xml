@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/consultation_type_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/image_button"
+        android:padding="8dp"
+        android:src="@mipmap/ic_stethoscope_icon" />
+
+    <TextView
+        android:id="@+id/consultation_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="10dp"
+        android:text="Cardiologia"
+        android:textColor="#000"
+        android:textSize="6pt"
+        android:textStyle="bold|italic" />
+
+</LinearLayout>

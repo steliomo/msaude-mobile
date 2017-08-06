@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="6dp"
+    tools:context="mz.co.txova.msaude.fragment.ScheduleConfirmationFragment">
+
+    <LinearLayout
+        android:id="@+id/time_table_date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="Datas Disponíveis"
+            android:textAlignment="textEnd"
+            android:textColor="#000"
+            android:textSize="7pt"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/time_table_dates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/time_table_hours_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="Horários Disponíveis"
+            android:textAlignment="textEnd"
+            android:textColor="#000"
+            android:textSize="7pt"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/time_table_hours"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</LinearLayout>

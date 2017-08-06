@@ -1,10 +1,10 @@
-package mz.co.txova.msaude.consultation;
+package mz.co.txova.msaude.consultation.model;
 
 
 import java.util.Date;
 
 import mz.co.txova.msaude.doctor.model.Doctor;
-import mz.co.txova.msaude.healthfacility.HealthFacility;
+import mz.co.txova.msaude.healthfacility.model.HealthFacility;
 
 /**
  * Created by Stélio Moiane on 6/11/17.

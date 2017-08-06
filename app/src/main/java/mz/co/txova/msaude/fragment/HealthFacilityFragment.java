@@ -1,20 +1,67 @@
 package mz.co.txova.msaude.fragment;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
+import android.widget.ListView;
 
+import org.greenrobot.eventbus.EventBus;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.OnItemClick;
 import mz.co.txova.msaude.R;
+import mz.co.txova.msaude.adapter.HealthFacilityAdapter;
+import mz.co.txova.msaude.component.SaudeComponent;
+import mz.co.txova.msaude.consultation.dto.HealthFacilityDTO;
+import mz.co.txova.msaude.consultation.model.QueryResult;
+import mz.co.txova.msaude.healthfacility.event.HealthFacilityEvent;
+import mz.co.txova.msaude.healthfacility.model.HealthFacility;
 
-public class HealthFacilityFragment extends Fragment {
+public class HealthFacilityFragment extends BaseFragment implements FragmentValidator {
+
+    @BindView(R.id.fragment_health_facility)
+    ListView healthFacilitiesView;
+
+    @Inject
+    EventBus eventBus;
+
+    private HealthFacility healthFacility;
+
+    private HealthFacilityDTO healthFacilityDTO;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreateView() {
+        SaudeComponent component = application.getComponent();
+        component.inject(this);
 
-        View view = inflater.inflate(R.layout.fragment_health_facility, container, false);
+        healthFacilityDTO = (HealthFacilityDTO) getActivity().getIntent().getSerializableExtra(QueryResult.QUERY_RESULT);
+        HealthFacilityAdapter adapter = new HealthFacilityAdapter(getActivity(), healthFacilityDTO.getHealthFacilities());
 
-        return view;
+        healthFacilitiesView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        healthFacilitiesView.setAdapter(adapter);
+    }
+
+    @Override
+    public int getResourceId() {
+        return R.layout.fragment_health_facility;
+    }
+
+    @OnItemClick(R.id.fragment_health_facility)
+    public void onItemClick(final int position) {
+        healthFacility = (HealthFacility) healthFacilitiesView.getItemAtPosition(position);
+        healthFacilityDTO.setHealthFacility(healthFacility);
+
+        eventBus.post(new HealthFacilityEvent(healthFacilityDTO));
+    }
+
+    @Override
+    public void validate(ViewPager viewPager, int position) {
+        if (healthFacility != null) {
+            return;
+        }
+
+        viewPager.setCurrentItem(position);
+        Snackbar.make(getView(), getString(R.string.clinic_must_be_selected), Snackbar.LENGTH_SHORT).show();
     }
 }

@@ -1,23 +1,31 @@
 package mz.co.txova.msaude.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
 import mz.co.txova.msaude.R;
-import mz.co.txova.msaude.consultation.Consultation;
+import mz.co.txova.msaude.consultation.model.Consultation;
 import mz.co.txova.msaude.util.DateUtil;
 
 /**
  * Created by Stélio Moiane on 6/11/17.
  */
-public class ConsultationAdapter extends BaseAdapter {
+public class ConsultationAdapter extends BaseAbstractAdapter {
 
+    @BindView(R.id.type_of_consultation)
+    TextView consultationType;
+
+    @BindView(R.id.doctor_name)
+    TextView doctorName;
+
+    @BindView(R.id.health_facility)
+    TextView healthFacility;
+
+    @BindView(R.id.date_scheduled)
+    TextView dateScheduled;
 
     private Context context;
     private List<Consultation> consultations;
@@ -43,29 +51,23 @@ public class ConsultationAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public Context getContext() {
+        return this.context;
+    }
 
-        View view = convertView;
-        LayoutInflater inflater = LayoutInflater.from(this.context);
+    @Override
+    public int getResourceId() {
+        return R.layout.list_consultations;
+    }
 
-        if (view == null) {
-            view = inflater.inflate(R.layout.list_consultations, parent, false);
-        }
+    @Override
+    public void onCreateView(final int position) {
 
         Consultation consultation = consultations.get(position);
 
-        TextView consultationType = (TextView) view.findViewById(R.id.type_of_consultation);
         consultationType.setText(consultation.getConsultationType().getConsultationType());
-
-        TextView doctorName = (TextView) view.findViewById(R.id.doctor_name);
         doctorName.setText(consultation.getDoctor().getFullName());
-
-        TextView healthFacility = (TextView) view.findViewById(R.id.health_facility);
         healthFacility.setText(consultation.getHealthFacility().getName());
-
-        TextView dateScheduled = (TextView) view.findViewById(R.id.date_scheduled);
         dateScheduled.setText(DateUtil.format(consultation.getScheduledDate()));
-
-        return view;
     }
 }

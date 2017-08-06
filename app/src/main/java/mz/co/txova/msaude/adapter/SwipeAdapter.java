@@ -4,40 +4,32 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import mz.co.txova.msaude.fragment.ConsultationTypeFragment;
-import mz.co.txova.msaude.fragment.HealthFacilityFragment;
+import mz.co.txova.msaude.consultation.fragment.FragmentDisplay;
 
 /**
  * Created by Stélio Moiane on 6/14/17.
  */
 public class SwipeAdapter extends FragmentPagerAdapter {
 
-    public static final int PAGES = 2;
+    private FragmentDisplay fragmentDisplay;
 
-    public SwipeAdapter(FragmentManager fragmentManager) {
+    public SwipeAdapter(FragmentManager fragmentManager, FragmentDisplay fragmentDisplay) {
         super(fragmentManager);
+        this.fragmentDisplay = fragmentDisplay;
     }
 
     @Override
     public Fragment getItem(int position) {
-
-        switch (position) {
-            case 0:
-                return new ConsultationTypeFragment();
-        }
-
-        Fragment fragment = new HealthFacilityFragment();
-
-        return fragment;
+        return fragmentDisplay.getFragment(position);
     }
 
     @Override
     public int getCount() {
-        return PAGES;
+        return this.fragmentDisplay.getPages();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Especialidade";
+        return this.fragmentDisplay.getFragmentTitle(position);
     }
 }

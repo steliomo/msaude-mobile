@@ -15,10 +15,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import mz.co.txova.msaude.R;
 import mz.co.txova.msaude.adapter.ConsultationAdapter;
-import mz.co.txova.msaude.consultation.Consultation;
-import mz.co.txova.msaude.consultation.ConsultationType;
+import mz.co.txova.msaude.consultation.model.Consultation;
+import mz.co.txova.msaude.consultation.model.ConsultationType;
 import mz.co.txova.msaude.doctor.model.Doctor;
-import mz.co.txova.msaude.healthfacility.HealthFacility;
+import mz.co.txova.msaude.healthfacility.model.HealthFacility;
 
 public class ConsultationsActivity extends BaseAuthenticateActivity {
 
@@ -33,7 +33,7 @@ public class ConsultationsActivity extends BaseAuthenticateActivity {
         setContentView(R.layout.activity_consultations);
         toolbar.setTitle("Consultas");
 
-        Consultation consultation = new Consultation(new ConsultationType("Pediatria"), new Doctor("Alima", "Moiane"), new HealthFacility("Clinicare", "clinicare@gmail.com", null, null), Calendar.getInstance().getTime());
+        Consultation consultation = new Consultation(new ConsultationType("Pediatria", getResources().getIdentifier("ic_stethoscope_icon", "mipmap", getPackageName())), new Doctor("Alima", "Moiane", "Pediatra"), new HealthFacility("Clinicare", "clinicare@gmail.com", null, null), Calendar.getInstance().getTime());
         List<Consultation> consultationList = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
@@ -53,6 +53,6 @@ public class ConsultationsActivity extends BaseAuthenticateActivity {
     @OnClick(R.id.add_new_consultation)
     public void OnclickAddNewConsultation() {
         Toast.makeText(this, "Nova consulta", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, ScheduleConsultationActivity.class));
+        startActivity(new Intent(this, SearchConsultationActivity.class));
     }
 }

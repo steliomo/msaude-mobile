@@ -5,6 +5,26 @@
     <string name="title_activity_schedule_consultation">ScheduleConsultationActivity</string>
     <string name="title_activity_setup_consultation">SetupConsultationActivity</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_search_consultation">SearchConsultationActivity</string>
+
+    <string name="doctors">Médicos</string>
+    <string name="clinics">Clínicas</string>
+    <string name="time_table">Horários</string>
+    <string name="confirmation">Confirmação</string>
+    <string name="required_field">Campo Obrigatório</string>
+    <string name="consultation_details">Detalhes da Consulta</string>
+    <string name="city">Cidade:</string>
+    <string name="consultation_type">Especialidade:</string>
+    <string name="clinic">Clínica:</string>
+    <string name="doctor">Médico:</string>
+    <string name="consultation_date">Data:</string>
+    <string name="hour">Hora:</string>
+
+    <!-- Validations-->
+    <string name="clinic_must_be_selected">A clínica deve ser seleccionada!</string>
+    <string name="doctor_must_be_selected">O médico deve ser seleccionado</string>
+    <string name="date_must_be_selected">A data deve ser selecionada!</string>
+    <string name="hour_must_be_selected">A hora deve ser seleccionada!</string>
 </resources>

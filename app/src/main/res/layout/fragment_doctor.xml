@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="6dp"
-    tools:context="mz.co.txova.msaude.fragment.ConsultationTypeFragment">
+    tools:context="mz.co.txova.msaude.fragment.DoctorFragment">
 
     <ListView
-        android:id="@+id/fragment_consultation_type"
+        android:id="@+id/fragment_doctors"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

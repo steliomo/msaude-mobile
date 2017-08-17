@@ -8,7 +8,6 @@ import java.util.List;
 import butterknife.BindView;
 import mz.co.txova.msaude.R;
 import mz.co.txova.msaude.consultation.model.Consultation;
-import mz.co.txova.msaude.util.DateUtil;
 
 /**
  * Created by Stélio Moiane on 6/11/17.
@@ -26,6 +25,9 @@ public class ConsultationAdapter extends BaseAbstractAdapter {
 
     @BindView(R.id.date_scheduled)
     TextView dateScheduled;
+
+    @BindView(R.id.time_scheduled)
+    TextView timeScheduled;
 
     private Context context;
     private List<Consultation> consultations;
@@ -65,9 +67,10 @@ public class ConsultationAdapter extends BaseAbstractAdapter {
 
         Consultation consultation = consultations.get(position);
 
-        consultationType.setText(consultation.getConsultationType().getConsultationType());
+        consultationType.setText(consultation.getConsultationType());
         doctorName.setText(consultation.getDoctor().getFullName());
-        healthFacility.setText(consultation.getHealthFacility().getName());
-        dateScheduled.setText(DateUtil.format(consultation.getScheduledDate()));
+        healthFacility.setText(consultation.getHealthFacility().getName() + " / " + consultation.getCity());
+        dateScheduled.setText(consultation.getScheduledDate());
+        timeScheduled.setText(consultation.getHour().getAvailability());
     }
 }

@@ -2,8 +2,6 @@ package mz.co.txova.msaude.consultation.service;
 
 import android.support.annotation.NonNull;
 
-import java.util.Arrays;
-
 import mz.co.txova.msaude.consultation.model.ConsultationFilter;
 import mz.co.txova.msaude.consultation.model.Hour;
 import mz.co.txova.msaude.consultation.model.QueryResult;
@@ -15,7 +13,7 @@ import mz.co.txova.msaude.healthfacility.model.HealthFacility;
 /**
  * Created by Stélio Moiane on 8/6/17.
  */
-public class HealthFacilityConsultationQueryFilter implements ConsultationQueryFilter {
+public class HealthFacilityAndDoctorConsultationQueryFilter implements ConsultationQueryFilter {
 
     private ConsultationQueryFilter consultationQueryFilter;
 
@@ -27,12 +25,11 @@ public class HealthFacilityConsultationQueryFilter implements ConsultationQueryF
     @Override
     public QueryResult find(ConsultationFilter consultationFilter) {
 
-        if (!consultationFilter.getHealthFacility().trim().isEmpty()) {
+        if (!consultationFilter.getHealthFacility().trim().isEmpty() && !consultationFilter.getDoctorName().trim().isEmpty()) {
             return fakeData(consultationFilter);
         }
 
         return consultationQueryFilter.find(consultationFilter);
-
     }
 
     @NonNull
@@ -52,34 +49,14 @@ public class HealthFacilityConsultationQueryFilter implements ConsultationQueryF
         _24072017.addHours(Hour.NINE_TO_NINE_HALF, Hour.NINE_HALF_TO_TEN, Hour.TEN_TO_TEN_HALF, Hour.TEN_HALF_TO_ELEVEN);
         _25072017.addHours(Hour.NINE_TO_NINE_HALF, Hour.NINE_HALF_TO_TEN, Hour.TEN_TO_TEN_HALF);
 
-        Doctor alima = new Doctor("Alima", "Moiane", "Especialista em pediatria");
-        alima.addDoctorAvailabilities(_20072017, _21072017, _23072017, _24072017, _25072017);
-
         Doctor nailah = new Doctor("Nailah", "Moiane", "Especialista em pediatria");
         nailah.addDoctorAvailabilities(_21072017, _22072017, _23072017);
 
-        Doctor rui = new Doctor("Rui", "Bastos", "Dermatologista");
-        rui.addDoctorAvailabilities(_20072017, _21072017);
-
-        Doctor yolanda = new Doctor("Yolanda", "Zambujo", "Oftamologista");
-        yolanda.addDoctorAvailabilities(_22072017, _25072017);
-
-        Doctor kamilah = new Doctor("Kamilah", "Moiane", "Clinica Geral");
-        kamilah.addDoctorAvailabilities(_25072017);
-
         HealthFacility clinicare = new HealthFacility("Clinicare");
-        clinicare.addDoctors(alima, nailah, rui, yolanda, kamilah);
+        clinicare.addDoctors(nailah);
 
-        HealthFacility hospitalPrivado = new HealthFacility("Hospital Privado");
-        hospitalPrivado.addDoctors(alima, nailah, kamilah);
-
-        HealthFacility clinica222 = new HealthFacility("Clínica 222");
-        clinica222.addDoctors(nailah, kamilah);
-
-        HealthFacility policlinic = new HealthFacility("Policlinic");
-        policlinic.addDoctors(alima);
-
-        DoctorDTO doctorDTO = new DoctorDTO(consultationFilter.getCity(), consultationFilter.getConsultattionType(), clinicare, Arrays.asList(alima, nailah, rui, yolanda, kamilah));
+        DoctorDTO doctorDTO = new DoctorDTO(consultationFilter.getCity(), consultationFilter.getHealthFacility(), clinicare, null);
+        doctorDTO.setDoctor(nailah);
 
         return doctorDTO;
     }

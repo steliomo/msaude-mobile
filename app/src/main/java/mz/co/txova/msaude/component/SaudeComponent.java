@@ -3,6 +3,7 @@ package mz.co.txova.msaude.component;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import mz.co.txova.msaude.activities.ConsultationsActivity;
 import mz.co.txova.msaude.activities.ScheduleConsultationActivity;
 import mz.co.txova.msaude.activities.SearchConsultationActivity;
 import mz.co.txova.msaude.firebase.SaudeFirebaseMessagingService;
@@ -32,4 +33,6 @@ public interface SaudeComponent {
     void inject(TimeTableFragment fragment);
 
     void inject(SaudeFirebaseMessagingService service);
+
+    void inject(ConsultationsActivity activity);
 }

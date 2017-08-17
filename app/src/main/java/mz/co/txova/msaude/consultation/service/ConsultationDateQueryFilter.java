@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.Arrays;
 
+import mz.co.txova.msaude.consultation.dto.HealthFacilityDTO;
 import mz.co.txova.msaude.consultation.model.ConsultationFilter;
 import mz.co.txova.msaude.consultation.model.Hour;
 import mz.co.txova.msaude.consultation.model.QueryResult;
@@ -15,7 +16,7 @@ import mz.co.txova.msaude.healthfacility.model.HealthFacility;
 /**
  * Created by Stélio Moiane on 8/6/17.
  */
-public class HealthFacilityConsultationQueryFilter implements ConsultationQueryFilter {
+public class ConsultationDateQueryFilter implements ConsultationQueryFilter {
 
     private ConsultationQueryFilter consultationQueryFilter;
 
@@ -27,7 +28,7 @@ public class HealthFacilityConsultationQueryFilter implements ConsultationQueryF
     @Override
     public QueryResult find(ConsultationFilter consultationFilter) {
 
-        if (!consultationFilter.getHealthFacility().trim().isEmpty()) {
+        if (!consultationFilter.getConsultationDate().trim().isEmpty()) {
             return fakeData(consultationFilter);
         }
 
@@ -36,7 +37,7 @@ public class HealthFacilityConsultationQueryFilter implements ConsultationQueryF
     }
 
     @NonNull
-    private DoctorDTO fakeData(ConsultationFilter consultationFilter) {
+    private HealthFacilityDTO fakeData(ConsultationFilter consultationFilter) {
 
         DoctorAvailability _20072017 = new DoctorAvailability("20-07-2017");
         DoctorAvailability _21072017 = new DoctorAvailability("21-07-2017");
@@ -79,8 +80,9 @@ public class HealthFacilityConsultationQueryFilter implements ConsultationQueryF
         HealthFacility policlinic = new HealthFacility("Policlinic");
         policlinic.addDoctors(alima);
 
-        DoctorDTO doctorDTO = new DoctorDTO(consultationFilter.getCity(), consultationFilter.getConsultattionType(), clinicare, Arrays.asList(alima, nailah, rui, yolanda, kamilah));
+        HealthFacilityDTO healthFacilityDTO = new HealthFacilityDTO(consultationFilter.getCity(), consultationFilter.getConsultattionType(), Arrays.asList(clinica222, clinica222, policlinic));
+        healthFacilityDTO.setDoctorAvailability(_20072017);
 
-        return doctorDTO;
+        return healthFacilityDTO;
     }
 }

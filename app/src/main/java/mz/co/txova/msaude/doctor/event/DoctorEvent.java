@@ -1,19 +1,19 @@
 package mz.co.txova.msaude.doctor.event;
 
-import mz.co.txova.msaude.doctor.model.Doctor;
+import mz.co.txova.msaude.doctor.dto.DoctorDTO;
 
 /**
  * Created by Stélio Moiane on 7/22/17.
  */
 public class DoctorEvent {
 
-    private Doctor doctor;
+    private DoctorDTO doctorDTO;
 
-    public DoctorEvent(Doctor doctor) {
-        this.doctor = doctor;
+    public DoctorEvent(DoctorDTO doctorDTO) {
+        this.doctorDTO = doctorDTO;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public DoctorDTO getDoctorDTO() {
+        return doctorDTO;
     }
 }

@@ -14,7 +14,8 @@ import butterknife.OnClick;
 import mz.co.txova.msaude.R;
 import mz.co.txova.msaude.activities.ScheduleConsultationActivity;
 import mz.co.txova.msaude.component.SaudeComponent;
-import mz.co.txova.msaude.consultation.model.ConsultationFilter;
+import mz.co.txova.msaude.consultation.event.ConsultationEvent;
+import mz.co.txova.msaude.consultation.model.Consultation;
 import mz.co.txova.msaude.doctor.event.DoctorAvailabilityDateEvent;
 import mz.co.txova.msaude.doctor.event.DoctorAvailabilityTimeEvent;
 import mz.co.txova.msaude.doctor.event.DoctorEvent;
@@ -49,6 +50,8 @@ public class ScheduleConfirmationFragment extends BaseFragment {
     @Inject
     EventBus eventBus;
 
+    private Consultation consultation;
+
     @Override
     public int getResourceId() {
         return R.layout.fragment_schedule_confirmation;
@@ -62,14 +65,18 @@ public class ScheduleConfirmationFragment extends BaseFragment {
         eventBus.register(this);
 
         ScheduleConsultationActivity activity = (ScheduleConsultationActivity) getActivity();
-        ConsultationFilter consultationFilter = activity.getConsultationFilter();
+        consultation = activity.getConsultation();
 
-        consultationCity.setText(consultationFilter.getCity());
-        consultationType.setText(consultationFilter.getConsultattionType());
-        consultationClinic.setText(consultationFilter.getHealthFacility());
-        consultationDoctor.setText(consultationFilter.getDoctorName());
-        consultationDate.setText(consultationFilter.getConsultationDate());
-        consultationTime.setText(null);
+        consultationCity.setText(consultation.getCity());
+        consultationType.setText(consultation.getConsultationType());
+        populateConsultation();
+    }
+
+    private void populateConsultation() {
+        consultationClinic.setText(consultation.getHealthFacility() != null ? consultation.getHealthFacility().getName() : null);
+        consultationDoctor.setText(consultation.getDoctor() != null ? consultation.getDoctor().getFullName() : null);
+        consultationDate.setText(consultation.getScheduledDate());
+        consultationTime.setText(consultation.getHour() != null ? consultation.getHour().getAvailability() : null);
     }
 
     @OnClick(R.id.confirmation_consultation_cancel)
@@ -80,27 +87,33 @@ public class ScheduleConfirmationFragment extends BaseFragment {
     @OnClick(R.id.confirmation_consultation_setup)
     public void onSetup() {
         Toast.makeText(getActivity(), "Consulta marcada com sucesso!", Toast.LENGTH_SHORT).show();
+        eventBus.post(new ConsultationEvent(consultation));
         getActivity().finish();
     }
 
     @Subscribe
     public void onEvent(DoctorEvent event) {
-        consultationDoctor.setText(event.getDoctor().getFullName());
+        consultation.setDoctor(event.getDoctorDTO().getDoctor());
+        consultation.setHealthFacility(event.getDoctorDTO().getHealthFacility() != null ? event.getDoctorDTO().getHealthFacility() : consultation.getHealthFacility());
+        populateConsultation();
     }
 
     @Subscribe
     public void onEvent(DoctorAvailabilityDateEvent event) {
-        consultationDate.setText(event.getDoctorAvailability().getAvailability());
+        consultation.setScheduledDate(event.getDoctorAvailability().getAvailability());
+        populateConsultation();
     }
 
     @Subscribe
     public void onEvent(DoctorAvailabilityTimeEvent event) {
-        consultationTime.setText(event.getHour().getAvailability());
+        consultation.setHour(event.getHour());
+        populateConsultation();
     }
 
     @Subscribe
     public void onEvent(HealthFacilityEvent event) {
-        consultationClinic.setText(event.getHealthFacilityDTO().getHealthFacility().getName());
+        consultation.setHealthFacility(event.getHealthFacilityDTO().getHealthFacility());
+        populateConsultation();
     }
 
     @Override

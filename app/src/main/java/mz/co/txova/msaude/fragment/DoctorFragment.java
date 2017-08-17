@@ -16,6 +16,7 @@ import butterknife.OnItemClick;
 import mz.co.txova.msaude.R;
 import mz.co.txova.msaude.adapter.DoctorAdapter;
 import mz.co.txova.msaude.component.SaudeComponent;
+import mz.co.txova.msaude.consultation.dto.HealthFacilityDTO;
 import mz.co.txova.msaude.consultation.model.QueryResult;
 import mz.co.txova.msaude.doctor.dto.DoctorDTO;
 import mz.co.txova.msaude.doctor.event.DoctorEvent;
@@ -33,6 +34,8 @@ public class DoctorFragment extends BaseFragment implements FragmentValidator {
 
     private Doctor doctor;
 
+    private DoctorDTO doctorDTO;
+
     @Override
     public int getResourceId() {
         return R.layout.fragment_doctor;
@@ -44,7 +47,14 @@ public class DoctorFragment extends BaseFragment implements FragmentValidator {
         component.inject(this);
         eventBus.register(this);
 
-        DoctorDTO doctorDTO = (DoctorDTO) getActivity().getIntent().getSerializableExtra(QueryResult.QUERY_RESULT);
+
+        QueryResult result = (QueryResult) getActivity().getIntent().getSerializableExtra(QueryResult.QUERY_RESULT);
+
+        if (result instanceof HealthFacilityDTO) {
+            return;
+        }
+
+        doctorDTO = (DoctorDTO) result;
         populateDoctorView(doctorDTO.getDoctors());
     }
 
@@ -57,12 +67,19 @@ public class DoctorFragment extends BaseFragment implements FragmentValidator {
     @OnItemClick(R.id.fragment_doctors)
     public void onItemClick(final int position) {
         doctor = (Doctor) doctorsView.getItemAtPosition(position);
-        eventBus.post(new DoctorEvent(doctor));
+        doctorDTO.setDoctor(doctor);
+        eventBus.post(new DoctorEvent(doctorDTO));
     }
 
     @Subscribe
     public void onEvent(HealthFacilityEvent event) {
         populateDoctorView(event.getHealthFacilityDTO().getHealthFacility().getDoctors());
+        if (doctorDTO == null) {
+            doctorDTO = new DoctorDTO();
+        }
+
+        doctorDTO.setDoctorAvailability(event.getHealthFacilityDTO().getDoctorAvailability());
+
         doctor = null;
     }
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import mz.co.txova.msaude.consultation.model.QueryResult;
 import mz.co.txova.msaude.doctor.model.Doctor;
+import mz.co.txova.msaude.doctor.model.DoctorAvailability;
 import mz.co.txova.msaude.healthfacility.model.HealthFacility;
 
 /**
@@ -19,6 +20,8 @@ public class HealthFacilityDTO implements QueryResult {
     private Doctor doctor;
 
     private HealthFacility healthFacility;
+
+    private DoctorAvailability doctorAvailability;
 
     private List<HealthFacility> healthFacilities;
 
@@ -54,5 +57,13 @@ public class HealthFacilityDTO implements QueryResult {
 
     public HealthFacility getHealthFacility() {
         return healthFacility;
+    }
+
+    public void setDoctorAvailability(DoctorAvailability doctorAvailability) {
+        this.doctorAvailability = doctorAvailability;
+    }
+
+    public DoctorAvailability getDoctorAvailability() {
+        return doctorAvailability;
     }
 }

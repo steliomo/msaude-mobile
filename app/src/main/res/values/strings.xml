@@ -27,4 +27,5 @@
     <string name="doctor_must_be_selected">O médico deve ser seleccionado</string>
     <string name="date_must_be_selected">A data deve ser selecionada!</string>
     <string name="hour_must_be_selected">A hora deve ser seleccionada!</string>
+    <string name="swipe">Arraste a tela</string>
 </resources>

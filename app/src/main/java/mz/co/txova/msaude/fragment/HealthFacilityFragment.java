@@ -11,9 +11,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnItemClick;
 import mz.co.txova.msaude.R;
+import mz.co.txova.msaude.activities.ScheduleConsultationActivity;
 import mz.co.txova.msaude.adapter.HealthFacilityAdapter;
 import mz.co.txova.msaude.component.SaudeComponent;
 import mz.co.txova.msaude.consultation.dto.HealthFacilityDTO;
+import mz.co.txova.msaude.consultation.model.Consultation;
 import mz.co.txova.msaude.consultation.model.QueryResult;
 import mz.co.txova.msaude.healthfacility.event.HealthFacilityEvent;
 import mz.co.txova.msaude.healthfacility.model.HealthFacility;
@@ -35,8 +37,13 @@ public class HealthFacilityFragment extends BaseFragment implements FragmentVali
         SaudeComponent component = application.getComponent();
         component.inject(this);
 
-        healthFacilityDTO = (HealthFacilityDTO) getActivity().getIntent().getSerializableExtra(QueryResult.QUERY_RESULT);
-        HealthFacilityAdapter adapter = new HealthFacilityAdapter(getActivity(), healthFacilityDTO.getHealthFacilities());
+        ScheduleConsultationActivity activity = (ScheduleConsultationActivity) getActivity();
+        healthFacilityDTO = (HealthFacilityDTO) activity.getIntent().getSerializableExtra(QueryResult.QUERY_RESULT);
+        Consultation consultation = activity.getConsultation();
+        consultation.setDoctor(healthFacilityDTO.getDoctor());
+        consultation.setScheduledDate(healthFacilityDTO.getDoctorAvailability() != null ? healthFacilityDTO.getDoctorAvailability().getAvailability() : null);
+
+        HealthFacilityAdapter adapter = new HealthFacilityAdapter(activity, healthFacilityDTO.getHealthFacilities());
 
         healthFacilitiesView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         healthFacilitiesView.setAdapter(adapter);

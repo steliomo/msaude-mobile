@@ -7,16 +7,22 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import mz.co.txova.msaude.R;
 import mz.co.txova.msaude.adapter.ConsultationAdapter;
+import mz.co.txova.msaude.component.SaudeComponent;
+import mz.co.txova.msaude.consultation.event.ConsultationEvent;
 import mz.co.txova.msaude.consultation.model.Consultation;
-import mz.co.txova.msaude.consultation.model.ConsultationType;
+import mz.co.txova.msaude.consultation.model.Hour;
 import mz.co.txova.msaude.doctor.model.Doctor;
 import mz.co.txova.msaude.healthfacility.model.HealthFacility;
 
@@ -28,18 +34,35 @@ public class ConsultationsActivity extends BaseAuthenticateActivity {
     @BindView(R.id.consultations)
     ListView consultations;
 
+    @Inject
+    EventBus eventBus;
+
+    private List<Consultation> consultationList;
+
     @Override
     public void onMhealthCreate(Bundle bundle) {
         setContentView(R.layout.activity_consultations);
+        SaudeComponent component = application.getComponent();
+        component.inject(this);
+        eventBus.register(this);
+
         toolbar.setTitle("Consultas");
 
-        Consultation consultation = new Consultation(new ConsultationType("Pediatria", getResources().getIdentifier("ic_stethoscope_icon", "mipmap", getPackageName())), new Doctor("Alima", "Moiane", "Pediatra"), new HealthFacility("Clinicare", "clinicare@gmail.com", null, null), Calendar.getInstance().getTime());
-        List<Consultation> consultationList = new ArrayList<>();
+        Doctor alima = new Doctor("Alima", "Moiane", "Pediatra");
+        HealthFacility clinicare = new HealthFacility("Clinicare", "clinicare@gmail.com", null, null);
 
-        for (int i = 0; i < 10; i++) {
-            consultationList.add(consultation);
-        }
+        Consultation consultation = new Consultation("Maputo", "Pediatria");
+        consultation.setHealthFacility(clinicare);
+        consultation.setDoctor(alima);
+        consultation.setScheduledDate("28-08-1984");
+        consultation.setHour(Hour.TEN_HALF_TO_ELEVEN);
+        consultationList = new ArrayList<>();
 
+        populateConsultation(consultation);
+    }
+
+    private void populateConsultation(Consultation consultation) {
+        consultationList.add(consultation);
         ConsultationAdapter adapter = new ConsultationAdapter(this, consultationList);
         consultations.setAdapter(adapter);
     }
@@ -54,5 +77,16 @@ public class ConsultationsActivity extends BaseAuthenticateActivity {
     public void OnclickAddNewConsultation() {
         Toast.makeText(this, "Nova consulta", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, SearchConsultationActivity.class));
+    }
+
+    @Subscribe
+    public void onEvent(ConsultationEvent event) {
+        populateConsultation(event.getConsultation());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        eventBus.unregister(this);
     }
 }

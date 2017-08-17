@@ -26,6 +26,7 @@ import mz.co.txova.msaude.consultation.filter.DateFragmentDisplayFilter;
 import mz.co.txova.msaude.consultation.filter.DoctorDateFragmentDisplayFilter;
 import mz.co.txova.msaude.consultation.filter.DoctorFragmentDisplayFilter;
 import mz.co.txova.msaude.consultation.filter.FragmentDisplayFilter;
+import mz.co.txova.msaude.consultation.model.Consultation;
 import mz.co.txova.msaude.consultation.model.ConsultationFilter;
 import mz.co.txova.msaude.fragment.FragmentValidator;
 import mz.co.txova.msaude.healthfacility.event.HealthFacilityEvent;
@@ -40,6 +41,8 @@ public class ScheduleConsultationActivity extends BaseAuthenticateActivity imple
 
     private ConsultationFilter consultationFilter;
 
+    private Consultation consultation;
+
     private int currentPosition;
 
     @Override
@@ -53,6 +56,7 @@ public class ScheduleConsultationActivity extends BaseAuthenticateActivity imple
 
         Intent intent = getIntent();
         consultationFilter = (ConsultationFilter) intent.getSerializableExtra(ConsultationFilter.FILTER);
+        consultation = new Consultation(consultationFilter.getCity(), consultationFilter.getConsultattionType());
 
         FragmentDisplayFilter allFragmentDisplayFilter = setUpChainFilter();
 
@@ -85,13 +89,13 @@ public class ScheduleConsultationActivity extends BaseAuthenticateActivity imple
         return allFragmentDisplayFilter;
     }
 
-    public ConsultationFilter getConsultationFilter() {
-        return consultationFilter;
+    public Consultation getConsultation() {
+        return consultation;
     }
 
     @Subscribe
     public void onEvent(HealthFacilityEvent event) {
-        consultationFilter.setHealthFacility(event.getHealthFacilityDTO().getHealthFacility().getName());
+        consultation.setHealthFacility(event.getHealthFacilityDTO().getHealthFacility());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -24,6 +24,18 @@ public class ConsultationServiceImpl implements ConsultationService {
     ConsultationQueryFilter doctorConsultationQueryFilter;
 
     @Inject
+    @Named("healthFacilityAndDoctorConsultationQueryFilter")
+    ConsultationQueryFilter healthFacilityAndDoctorConsultationQueryFilter;
+
+    @Inject
+    @Named("allConsultationQueryFilter")
+    ConsultationQueryFilter allConsultationQueryFilter;
+
+    @Inject
+    @Named("consultationDateQueryFilter")
+    ConsultationQueryFilter consultationDateQueryFilter;
+
+    @Inject
     public ConsultationServiceImpl() {
     }
 
@@ -32,8 +44,11 @@ public class ConsultationServiceImpl implements ConsultationService {
 
         //setup the chain
         healthFacilityConsultationQueryFilter.setNextConsultationQueryFilter(defaultConsultationFilter);
-        doctorConsultationQueryFilter.setNextConsultationQueryFilter(healthFacilityConsultationQueryFilter);
+        consultationDateQueryFilter.setNextConsultationQueryFilter(healthFacilityConsultationQueryFilter);
+        doctorConsultationQueryFilter.setNextConsultationQueryFilter(consultationDateQueryFilter);
+        healthFacilityAndDoctorConsultationQueryFilter.setNextConsultationQueryFilter(doctorConsultationQueryFilter);
+        allConsultationQueryFilter.setNextConsultationQueryFilter(healthFacilityAndDoctorConsultationQueryFilter);
 
-        return doctorConsultationQueryFilter.find(consultationFilter);
+        return allConsultationQueryFilter.find(consultationFilter);
     }
 }

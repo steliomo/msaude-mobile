@@ -10,16 +10,22 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnItemClick;
 import mz.co.txova.msaude.R;
+import mz.co.txova.msaude.activities.ScheduleConsultationActivity;
 import mz.co.txova.msaude.adapter.TimeTableAdapter;
 import mz.co.txova.msaude.component.SaudeComponent;
+import mz.co.txova.msaude.consultation.dto.HealthFacilityDTO;
 import mz.co.txova.msaude.consultation.model.Availability;
+import mz.co.txova.msaude.consultation.model.Consultation;
 import mz.co.txova.msaude.consultation.model.Hour;
+import mz.co.txova.msaude.consultation.model.QueryResult;
+import mz.co.txova.msaude.doctor.dto.DoctorDTO;
 import mz.co.txova.msaude.doctor.event.DoctorAvailabilityDateEvent;
 import mz.co.txova.msaude.doctor.event.DoctorAvailabilityTimeEvent;
 import mz.co.txova.msaude.doctor.event.DoctorEvent;
@@ -43,6 +49,7 @@ public class TimeTableFragment extends BaseFragment implements FragmentValidator
     @Inject
     EventBus eventBus;
     private DoctorAvailability doctorAvailability;
+
     private Hour hour;
 
     @Override
@@ -59,6 +66,42 @@ public class TimeTableFragment extends BaseFragment implements FragmentValidator
 
         dateLayout.setVisibility(View.GONE);
         hourLayout.setVisibility(View.GONE);
+
+        ScheduleConsultationActivity activity = (ScheduleConsultationActivity) getActivity();
+        QueryResult result = (QueryResult) activity.getIntent().getSerializableExtra(QueryResult.QUERY_RESULT);
+
+        if (result instanceof HealthFacilityDTO) {
+            return;
+        }
+
+        DoctorDTO doctorDTO = (DoctorDTO) result;
+
+        Consultation consultation = activity.getConsultation();
+        consultation.setHealthFacility(doctorDTO.getHealthFacility());
+        consultation.setDoctor(doctorDTO.getDoctor());
+        consultation.setScheduledDate(doctorDTO.getDoctorAvailability() != null ? doctorDTO.getDoctorAvailability().getAvailability() : null);
+
+        if (doctorDTO.getDoctorAvailability() != null) {
+            hourLayout.setVisibility(View.VISIBLE);
+            TimeTableAdapter hourAdapter = new TimeTableAdapter(activity, new ArrayList<Availability>(doctorDTO.getDoctorAvailability().getHours()));
+            hoursList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            hoursList.setAdapter(hourAdapter);
+            return;
+        }
+
+        if (doctorDTO.getDoctor() != null) {
+            populateDates(new ArrayList<Availability>(doctorDTO.getDoctor().getDoctorAvailabilities()));
+        }
+    }
+
+    private void populateDates(List<Availability> availabilities) {
+        dateLayout.setVisibility(View.VISIBLE);
+
+        TimeTableAdapter datesAdapter = new TimeTableAdapter(getActivity(),
+                availabilities);
+
+        datesList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        datesList.setAdapter(datesAdapter);
     }
 
     @Subscribe
@@ -67,18 +110,16 @@ public class TimeTableFragment extends BaseFragment implements FragmentValidator
         boolean hasDate = getArguments() != null ? getArguments().getBoolean("hasDate") : false;
 
         if (hasDate) {
+            hourLayout.setVisibility(View.VISIBLE);
+            TimeTableAdapter hourAdapter = new TimeTableAdapter(getActivity(), new ArrayList<Availability>(event.getDoctorDTO().getDoctorAvailability().getHours()));
+            hoursList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            hoursList.setAdapter(hourAdapter);
             return;
         }
 
         if (!hasDate) {
 
-            dateLayout.setVisibility(View.VISIBLE);
-
-            TimeTableAdapter datesAdapter = new TimeTableAdapter(getActivity(),
-                    new ArrayList<Availability>(event.getDoctor().getDoctorAvailabilities()));
-
-            datesList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            datesList.setAdapter(datesAdapter);
+            populateDates(new ArrayList<Availability>(event.getDoctorDTO().getDoctor().getDoctorAvailabilities()));
 
             doctorAvailability = null;
             hour = null;
@@ -94,15 +135,9 @@ public class TimeTableFragment extends BaseFragment implements FragmentValidator
             return;
         }
 
-        if (!hasDate) {
+        if (!hasDate && event.getHealthFacilityDTO().getDoctor() != null) {
 
-            dateLayout.setVisibility(View.VISIBLE);
-
-            TimeTableAdapter datesAdapter = new TimeTableAdapter(getActivity(),
-                    new ArrayList<Availability>(event.getHealthFacilityDTO().getDoctor().getDoctorAvailabilities()));
-
-            datesList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            datesList.setAdapter(datesAdapter);
+            populateDates(new ArrayList<Availability>(event.getHealthFacilityDTO().getDoctor().getDoctorAvailabilities()));
 
             doctorAvailability = null;
             hour = null;
@@ -111,6 +146,7 @@ public class TimeTableFragment extends BaseFragment implements FragmentValidator
 
     @OnItemClick(R.id.time_table_dates)
     public void onClickDate(int position) {
+        hour = null;
         hourLayout.setVisibility(View.VISIBLE);
 
         doctorAvailability = (DoctorAvailability) datesList.getItemAtPosition(position);
@@ -140,6 +176,7 @@ public class TimeTableFragment extends BaseFragment implements FragmentValidator
         boolean hasDate = getArguments() != null ? getArguments().getBoolean("hasDate") : false;
 
         if (hasDate) {
+            validateHour(viewPager, position);
             return;
         }
 
@@ -149,6 +186,10 @@ public class TimeTableFragment extends BaseFragment implements FragmentValidator
             return;
         }
 
+        validateHour(viewPager, position);
+    }
+
+    private void validateHour(ViewPager viewPager, int position) {
         if (hour == null) {
             viewPager.setCurrentItem(position);
             Snackbar.make(getView(), getString(R.string.hour_must_be_selected), Snackbar.LENGTH_SHORT).show();

@@ -1,8 +1,6 @@
 package mz.co.txova.msaude.consultation.model;
 
 
-import java.util.Date;
-
 import mz.co.txova.msaude.doctor.model.Doctor;
 import mz.co.txova.msaude.healthfacility.model.HealthFacility;
 
@@ -11,19 +9,23 @@ import mz.co.txova.msaude.healthfacility.model.HealthFacility;
  */
 public class Consultation {
 
-    private ConsultationType consultationType;
+    private String city;
+    private String consultationType;
     private Doctor doctor;
     private HealthFacility healthFacility;
-    private Date scheduledDate;
+    private String scheduledDate;
+    private Hour hour;
 
-    public Consultation(ConsultationType consultationType, Doctor doctor, HealthFacility healthFacility, Date scheduledDate) {
+    public Consultation(String city, String consultationType) {
+        this.city = city;
         this.consultationType = consultationType;
-        this.doctor = doctor;
-        this.healthFacility = healthFacility;
-        this.scheduledDate = scheduledDate;
     }
 
-    public ConsultationType getConsultationType() {
+    public String getCity() {
+        return city;
+    }
+
+    public String getConsultationType() {
         return consultationType;
     }
 
@@ -31,11 +33,31 @@ public class Consultation {
         return doctor;
     }
 
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
     public HealthFacility getHealthFacility() {
         return healthFacility;
     }
 
-    public Date getScheduledDate() {
+    public void setHealthFacility(HealthFacility healthFacility) {
+        this.healthFacility = healthFacility;
+    }
+
+    public String getScheduledDate() {
         return scheduledDate;
+    }
+
+    public void setScheduledDate(String scheduledDate) {
+        this.scheduledDate = scheduledDate;
+    }
+
+    public Hour getHour() {
+        return hour;
+    }
+
+    public void setHour(Hour hour) {
+        this.hour = hour;
     }
 }

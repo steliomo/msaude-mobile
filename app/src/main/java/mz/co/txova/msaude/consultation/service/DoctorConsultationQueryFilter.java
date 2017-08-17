@@ -27,11 +27,11 @@ public class DoctorConsultationQueryFilter implements ConsultationQueryFilter {
     @Override
     public QueryResult find(ConsultationFilter consultationFilter) {
 
-        if (consultationFilter.getDoctorName().trim().isEmpty()) {
-            return consultationQueryFilter.find(consultationFilter);
+        if (!consultationFilter.getDoctorName().trim().isEmpty()) {
+            return fakeData(consultationFilter);
         }
 
-        return fakeData(consultationFilter);
+        return consultationQueryFilter.find(consultationFilter);
     }
 
     @NonNull

@@ -32,20 +32,35 @@
         <activity
             android:name=".activities.SearchConsultationActivity"
             android:label="@string/title_activity_search_consultation"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
 
         <service android:name=".firebase.SaudeFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".firebase.SaudeFirebaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".activities.SelectCityActivity"
+            android:label="@string/title_activity_select_city"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.SelectConsultationTypeActivity"
+            android:label="@string/title_activity_select_consultation_type"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.HealthFacilitySelectActivity"
+            android:label="@string/title_activity_health_facility"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.SelectDoctorActivity"
+            android:label="@string/title_activity_select_doctor"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -20,6 +20,8 @@ public class HealthFacility implements Serializable {
 
     private String contact;
 
+    private City city;
+
     private List<Doctor> doctors;
 
     public HealthFacility(String name, String email, String address, String contact) {
@@ -58,5 +60,13 @@ public class HealthFacility implements Serializable {
         for (Doctor doctor : doctors) {
             this.doctors.add(doctor);
         }
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

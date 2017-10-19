@@ -18,58 +18,142 @@
         android:layout_margin="14dp"
         android:orientation="vertical">
 
-        <AutoCompleteTextView
-            android:id="@+id/consultation_city"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/field_layout"
-            android:hint="Cidade"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColorHint="#bbdfea"
-            android:textStyle="italic|bold" />
+            android:orientation="horizontal">
 
-        <AutoCompleteTextView
-            android:id="@+id/consultation_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/field_layout"
-            android:hint="Especialidade"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColorHint="#bbdfea"
-            android:textStyle="italic|bold" />
+            <ImageButton
+                android:id="@+id/consultation_city_btn"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_weight="6"
+                android:background="#fff"
+                android:src="@mipmap/ic_city" />
 
-        <AutoCompleteTextView
-            android:id="@+id/consultation_clinic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/field_layout"
-            android:hint="Clínica"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColorHint="#bbdfea"
-            android:textStyle="italic|bold" />
+            <EditText
+                android:id="@+id/consultation_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/field_layout"
+                android:editable="false"
+                android:hint="Cidade"
+                android:inputType="none"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#bbdfea"
+                android:textStyle="italic|bold" />
 
-        <AutoCompleteTextView
-            android:id="@+id/consultation_doctor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/field_layout"
-            android:hint="Médico"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColorHint="#bbdfea"
-            android:textStyle="italic|bold" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/consultation_type_btn"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_weight="6"
+                android:background="#fff"
+                android:src="@mipmap/ic_stethoscope" />
+
+            <EditText
+                android:id="@+id/consultation_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/field_layout"
+                android:editable="false"
+                android:hint="Especialidade"
+                android:inputType="none"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#bbdfea"
+                android:textStyle="italic|bold" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/consultation_clinic_btn"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_weight="6"
+                android:background="#fff"
+                android:src="@mipmap/ic_hospital" />
+
+            <EditText
+                android:id="@+id/consultation_clinic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/field_layout"
+                android:editable="false"
+                android:hint="Clínica"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="#000"
+                android:textColorHint="#bbdfea"
+                android:textStyle="italic|bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/consultation_doctor_btn"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_weight="6"
+                android:background="#fff"
+                android:src="@mipmap/ic_doctor" />
+
+            <EditText
+                android:id="@+id/consultation_doctor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/field_layout"
+                android:editable="false"
+                android:hint="Médico"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#bbdfea"
+                android:textStyle="italic|bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/consultation_date_picker"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_weight="6"
+                android:background="#fff"
+                android:src="@mipmap/ic_calendar" />
 
             <EditText
                 android:id="@+id/consultation_date"
@@ -82,16 +166,10 @@
                 android:hint="Data"
                 android:padding="10dp"
                 android:singleLine="true"
+                android:textColor="#000"
                 android:textColorHint="#bbdfea"
                 android:textStyle="italic|bold" />
 
-            <ImageButton
-                android:id="@+id/consultation_date_picker"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_weight="6"
-                android:background="#fff"
-                android:src="@mipmap/ic_calendar" />
 
         </LinearLayout>
 

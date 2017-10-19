@@ -7,18 +7,11 @@ public class ConsultationType {
 
     private String consultationType;
 
-    private int iconId;
-
-    public ConsultationType(String consultationType, final int iconId) {
+    public ConsultationType(String consultationType) {
         this.consultationType = consultationType;
-        this.iconId = iconId;
     }
 
     public String getConsultationType() {
         return consultationType;
-    }
-
-    public int getIconId() {
-        return iconId;
     }
 }

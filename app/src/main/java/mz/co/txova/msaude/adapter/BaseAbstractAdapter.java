@@ -13,11 +13,13 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseAbstractAdapter extends BaseAdapter {
 
+    protected View view;
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View view = convertView;
+        view = convertView;
 
         if (view == null) {
             view = inflater.inflate(getResourceId(), parent, false);
@@ -35,4 +37,8 @@ public abstract class BaseAbstractAdapter extends BaseAdapter {
     public abstract int getResourceId();
 
     public abstract void onCreateView(int position);
+
+    public View getView() {
+        return view;
+    }
 }

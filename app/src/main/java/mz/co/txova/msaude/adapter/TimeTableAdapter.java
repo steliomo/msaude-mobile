@@ -38,7 +38,7 @@ public class TimeTableAdapter extends BaseAbstractAdapter {
 
     @Override
     public int getResourceId() {
-        return R.layout.list_consultation_type;
+        return R.layout.list_dates;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class TimeTableAdapter extends BaseAbstractAdapter {
         String iconName = "ic_timer";
         Availability item = availabilities.get(position);
 
-        if(item instanceof DoctorAvailability)
+        if (item instanceof DoctorAvailability)
             iconName = "ic_calendar_today";
 
         icon.setImageResource(context.getResources().getIdentifier(iconName, "mipmap", context.getPackageName()));

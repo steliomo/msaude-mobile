@@ -32,11 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         if (toolbar != null) {
-
             toolbar.setTitle("");
-            toolbar.setNavigationIcon(R.mipmap.ic_menu);
-            toolbar.setTitleTextColor(Color.WHITE);
-
             setSupportActionBar(toolbar);
         }
     }

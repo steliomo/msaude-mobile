@@ -28,4 +28,9 @@
     <string name="date_must_be_selected">A data deve ser selecionada!</string>
     <string name="hour_must_be_selected">A hora deve ser seleccionada!</string>
     <string name="swipe">Arraste a tela</string>
+    <string name="title_activity_select_city">SelectCityActivity</string>
+    <string name="title_activity_select_consultation_type">SelectConsultationTypeActivity</string>
+    <string name="title_activity_health_facility">HealthFacilityActivity</string>
+    <string name="title_activity_select_doctor">SelectDoctorActivity</string>
+    <string name="action_delete">Delete</string>
 </resources>

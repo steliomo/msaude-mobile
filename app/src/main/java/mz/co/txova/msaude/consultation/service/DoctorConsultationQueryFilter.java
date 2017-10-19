@@ -10,6 +10,7 @@ import mz.co.txova.msaude.consultation.model.Hour;
 import mz.co.txova.msaude.consultation.model.QueryResult;
 import mz.co.txova.msaude.doctor.model.Doctor;
 import mz.co.txova.msaude.doctor.model.DoctorAvailability;
+import mz.co.txova.msaude.healthfacility.model.City;
 import mz.co.txova.msaude.healthfacility.model.HealthFacility;
 
 /**
@@ -51,17 +52,23 @@ public class DoctorConsultationQueryFilter implements ConsultationQueryFilter {
         _24072017.addHours(Hour.NINE_TO_NINE_HALF, Hour.NINE_HALF_TO_TEN, Hour.TEN_TO_TEN_HALF, Hour.TEN_HALF_TO_ELEVEN);
         _25072017.addHours(Hour.NINE_TO_NINE_HALF, Hour.NINE_HALF_TO_TEN, Hour.TEN_TO_TEN_HALF);
 
+
+        City maputo = new City("Maputo", "Moçambique");
+
         Doctor nailah = new Doctor("Nailah", "Moiane", "Especialista em pediatria");
         nailah.addDoctorAvailabilities(_21072017, _22072017, _23072017);
 
         HealthFacility clinicare = new HealthFacility("Clinicare");
         clinicare.addDoctors(nailah);
+        clinicare.setCity(maputo);
 
         HealthFacility hospitalPrivado = new HealthFacility("Hospital Privado");
         hospitalPrivado.addDoctors(nailah);
+        hospitalPrivado.setCity(maputo);
 
         HealthFacility clinica222 = new HealthFacility("Clínica 222");
         clinica222.addDoctors(nailah);
+        clinica222.setCity(maputo);
 
         HealthFacilityDTO healthFacilityDTO = new HealthFacilityDTO(consultationFilter.getCity(), consultationFilter.getConsultattionType(), Arrays.asList(clinicare, hospitalPrivado, clinica222));
         healthFacilityDTO.setDoctor(nailah);

@@ -13,7 +13,7 @@ import mz.co.txova.msaude.doctor.model.Doctor;
 /**
  * Created by Stélio Moiane on 6/16/17.
  */
-public class DoctorAdapter extends BaseAbstractAdapter {
+public class DoctorAdapter extends BaseAbstractAdapter implements FilterableAdapter<Doctor> {
 
     @BindView(R.id.doctor_icon)
     ImageView doctorIcon;
@@ -63,5 +63,11 @@ public class DoctorAdapter extends BaseAbstractAdapter {
     @Override
     public long getItemId(int position) {
         return doctors.get(position).hashCode();
+    }
+
+    @Override
+    public void setFilter(List<Doctor> items) {
+        this.doctors = items;
+        notifyDataSetChanged();
     }
 }

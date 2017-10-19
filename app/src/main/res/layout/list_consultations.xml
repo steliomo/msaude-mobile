@@ -2,22 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="2dp"
-    android:orientation="horizontal">
+    android:background="@drawable/item_selected"
+    android:clickable="true"
+    android:elevation="10dp"
+    android:focusable="true"
+    android:orientation="horizontal"
+    android:padding="6dp">
 
-    <ImageView
+    <FrameLayout
         android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/image_button"
-        android:padding="8dp"
-        android:src="@mipmap/ic_stethoscope_icon" />
+        android:layout_height="56dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/image_view_layout"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_stethoscope" />
+
+        <ImageView
+            android:id="@+id/selected_row"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom|end"
+            android:background="@drawable/selected_row_icon"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_check"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="3dp"
         android:orientation="vertical">
 
         <TextView
@@ -41,7 +61,7 @@
                 android:layout_weight="1"
                 android:text="Doctor"
                 android:textColor="#000"
-                android:textSize="7pt"
+                android:textSize="6pt"
                 android:textStyle="bold|italic" />
 
             <TextView
@@ -50,7 +70,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_weight="1"
-                android:padding="4dp"
                 android:text="Health Facility"
                 android:textAlignment="textEnd"
                 android:textSize="5pt"
@@ -70,7 +89,7 @@
                 android:layout_weight="1"
                 android:text="Health Facility"
                 android:textColor="#000"
-                android:textSize="7pt"
+                android:textSize="6pt"
                 android:textStyle="bold|italic" />
 
             <TextView
@@ -79,7 +98,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_weight="1"
-                android:padding="4dp"
                 android:text="Health Facility"
                 android:textAlignment="textEnd"
                 android:textSize="5pt"

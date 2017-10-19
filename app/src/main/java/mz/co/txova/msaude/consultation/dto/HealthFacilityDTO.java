@@ -31,6 +31,9 @@ public class HealthFacilityDTO implements QueryResult {
         this.healthFacilities = healthFacilities;
     }
 
+    public HealthFacilityDTO() {
+    }
+
     public String getCity() {
         return city;
     }

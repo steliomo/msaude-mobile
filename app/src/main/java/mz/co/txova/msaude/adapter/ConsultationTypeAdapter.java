@@ -13,7 +13,7 @@ import mz.co.txova.msaude.consultation.model.ConsultationType;
 /**
  * Created by Stélio Moiane on 6/14/17.
  */
-public class ConsultationTypeAdapter extends BaseAbstractAdapter {
+public class ConsultationTypeAdapter extends BaseAbstractAdapter implements FilterableAdapter<ConsultationType> {
 
     @BindView(R.id.icon)
     ImageView consultationTypeImage;
@@ -21,9 +21,9 @@ public class ConsultationTypeAdapter extends BaseAbstractAdapter {
     @BindView(R.id.name)
     TextView consultationTypeName;
 
-    private final Context context;
+    private Context context;
 
-    private final List<ConsultationType> consultationTypes;
+    private List<ConsultationType> consultationTypes;
 
     public ConsultationTypeAdapter(final Context context, List<ConsultationType> consultationTypes) {
         this.context = context;
@@ -60,7 +60,13 @@ public class ConsultationTypeAdapter extends BaseAbstractAdapter {
 
         ConsultationType consultationType = consultationTypes.get(position);
 
-        consultationTypeImage.setImageResource(consultationType.getIconId());
+        consultationTypeImage.setImageResource(R.mipmap.ic_stethoscope);
         consultationTypeName.setText(consultationType.getConsultationType());
+    }
+
+    @Override
+    public void setFilter(List<ConsultationType> items) {
+        consultationTypes = items;
+        notifyDataSetChanged();
     }
 }

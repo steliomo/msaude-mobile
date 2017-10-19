@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -22,30 +24,46 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import mz.co.txova.msaude.R;
 import mz.co.txova.msaude.component.SaudeComponent;
+import mz.co.txova.msaude.consultation.event.ConsultationTypeEvent;
 import mz.co.txova.msaude.consultation.model.ConsultationFilter;
 import mz.co.txova.msaude.consultation.model.QueryResult;
 import mz.co.txova.msaude.consultation.service.ConsultationService;
+import mz.co.txova.msaude.doctor.event.DoctorEvent;
+import mz.co.txova.msaude.healthfacility.event.CityEvent;
+import mz.co.txova.msaude.healthfacility.event.HealthFacilityEvent;
 import mz.co.txova.msaude.validator.TextViewValidator;
 
 public class SearchConsultationActivity extends BaseAuthenticateActivity implements DatePickerDialog.OnDateSetListener {
 
     @BindView(R.id.consultation_city)
-    AutoCompleteTextView consultationCity;
+    EditText consultationCity;
 
     @BindView(R.id.consultation_type)
-    AutoCompleteTextView consultationType;
+    EditText consultationType;
+
+    @BindView(R.id.consultation_type_btn)
+    ImageButton consultationTypeBtn;
 
     @BindView(R.id.consultation_clinic)
-    AutoCompleteTextView consultationClinic;
+    EditText consultationClinic;
+
+    @BindView(R.id.consultation_clinic_btn)
+    ImageButton consultationClinicBtn;
 
     @BindView(R.id.consultation_doctor)
-    AutoCompleteTextView consultationDoctor;
+    EditText consultationDoctor;
+
+    @BindView(R.id.consultation_doctor_btn)
+    ImageButton consultationDoctorBtn;
 
     @BindView(R.id.consultation_date)
     EditText consultationDate;
 
     @BindView(R.id.consultation_date_picker)
     ImageButton consultationDatePicker;
+
+    @BindView(R.id.consultation_city_btn)
+    ImageButton consultationCityBtn;
 
     @BindView(R.id.consultation_search)
     Button consulationSearch;
@@ -59,6 +77,9 @@ public class SearchConsultationActivity extends BaseAuthenticateActivity impleme
     @Inject
     ConsultationService consultationService;
 
+    @Inject
+    EventBus eventBus;
+
     @Override
     public void onMhealthCreate(Bundle bundle) {
         setContentView(R.layout.activity_search_consultation);
@@ -66,24 +87,17 @@ public class SearchConsultationActivity extends BaseAuthenticateActivity impleme
 
         SaudeComponent component = application.getComponent();
         component.inject(this);
-
-        ArrayAdapter<String> consultationAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, Arrays.asList("Maputo", "Matola", "Beira", "Quelimane", "Neslpruit"));
-        consultationCity.setAdapter(consultationAdapter);
-
-        ArrayAdapter<String> consultationTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, Arrays.asList("Acupuntura", "Alergia e Imunologia", "Cardiologia", "Cirurgia Geral", "Clinica Geral", "Dermatologia"));
-        consultationType.setAdapter(consultationTypeAdapter);
-
-        ArrayAdapter<String> consultationClinicAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, Arrays.asList("Hospital Privado", "Clinicare", "Clinica 222", "Consultórios Médicos", "Policlinic"));
-        consultationClinic.setAdapter(consultationClinicAdapter);
-
-        ArrayAdapter<String> consultationDoctorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, Arrays.asList("Rui Bastos", "Alima Moiane"));
-        consultationDoctor.setAdapter(consultationDoctorAdapter);
+        eventBus.register(this);
 
         validator.addViews(consultationCity, consultationType);
     }
 
     @OnClick(R.id.consultation_date_picker)
     public void onClickConsultationDatePicker() {
+        showDatePicker();
+    }
+
+    private void showDatePicker() {
         Calendar instance = Calendar.getInstance();
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, instance.get(Calendar.YEAR),
@@ -136,5 +150,78 @@ public class SearchConsultationActivity extends BaseAuthenticateActivity impleme
 
         startActivity(intent);
         finish();
+    }
+
+    @OnClick(R.id.consultation_date)
+    public void onClickConsultationDate() {
+        showDatePicker();
+    }
+
+    @OnClick(R.id.consultation_city)
+    public void onclickConsultationCity() {
+        startActivity(new Intent(this, SelectCityActivity.class));
+    }
+
+    @OnClick(R.id.consultation_city_btn)
+    public void onClickConsultationCityBtn() {
+        startActivity(new Intent(this, SelectCityActivity.class));
+    }
+
+    @OnClick(R.id.consultation_type)
+    public void onclickConsultationType() {
+        startActivity(new Intent(this, SelectConsultationTypeActivity.class));
+    }
+
+    @OnClick(R.id.consultation_type_btn)
+    public void onclickConsultationTypeBtn() {
+        startActivity(new Intent(this, SelectConsultationTypeActivity.class));
+    }
+
+    @OnClick(R.id.consultation_clinic)
+    public void onclickConsultationClinic() {
+        startActivity(new Intent(this, HealthFacilitySelectActivity.class));
+    }
+
+    @OnClick(R.id.consultation_clinic_btn)
+    public void onclickConsultationClinicBtn() {
+        startActivity(new Intent(this, HealthFacilitySelectActivity.class));
+    }
+
+    @OnClick(R.id.consultation_doctor)
+    public void onclickConsultationDoctor() {
+        startActivity(new Intent(this, SelectDoctorActivity.class));
+    }
+
+    @OnClick(R.id.consultation_doctor_btn)
+    public void onclickConsultationDoctorBtn() {
+        startActivity(new Intent(this, SelectDoctorActivity.class));
+    }
+
+    @Subscribe
+    public void onEvent(CityEvent cityEvent) {
+        consultationCity.setText(cityEvent.getCity().getCity());
+        consultationCity.setError(null);
+    }
+
+    @Subscribe
+    public void onEvent(ConsultationTypeEvent consultationTypeEvent) {
+        consultationType.setText(consultationTypeEvent.getConsultationType().getConsultationType());
+        consultationType.setError(null);
+    }
+
+    @Subscribe
+    public void onEvent(HealthFacilityEvent healthFacilityEvent) {
+        consultationClinic.setText(healthFacilityEvent.getHealthFacilityDTO().getHealthFacility().getName());
+    }
+
+    @Subscribe
+    public void onEvent(DoctorEvent doctorEvent) {
+        consultationDoctor.setText(doctorEvent.getDoctorDTO().getDoctor().getFullName());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        eventBus.unregister(this);
     }
 }

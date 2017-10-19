@@ -5,5 +5,7 @@
     android:layout_height="wrap_content"
     android:background="#058ccf"
     android:minHeight="?attr/actionBarSize"
+    app:titleTextColor="#FFF"
+    app:navigationIcon="@mipmap/ic_menu"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:theme="@style/AppTheme" />

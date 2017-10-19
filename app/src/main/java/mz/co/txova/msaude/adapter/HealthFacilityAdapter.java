@@ -13,18 +13,24 @@ import mz.co.txova.msaude.healthfacility.model.HealthFacility;
 /**
  * Created by Stélio Moiane on 6/16/17.
  */
-public class HealthFacilityAdapter extends BaseAbstractAdapter {
+public class HealthFacilityAdapter extends BaseAbstractAdapter implements FilterableAdapter<HealthFacility> {
 
 
     @BindView(R.id.icon)
     ImageView icon;
 
-    @BindView(R.id.name)
+    @BindView(R.id.health_facility_name)
     TextView healtFacilityName;
 
-    private final Context context;
+    @BindView(R.id.city)
+    TextView city;
 
-    private final List<HealthFacility> healthFacilities;
+    @BindView(R.id.country)
+    TextView country;
+
+    private Context context;
+
+    private List<HealthFacility> healthFacilities;
 
     public HealthFacilityAdapter(Context context, List<HealthFacility> healthFacilities) {
         this.context = context;
@@ -38,15 +44,17 @@ public class HealthFacilityAdapter extends BaseAbstractAdapter {
 
     @Override
     public int getResourceId() {
-        return R.layout.list_consultation_type;
+        return R.layout.list_health_facilities;
     }
 
     @Override
     public void onCreateView(int position) {
 
         HealthFacility healthFacility = healthFacilities.get(position);
-        icon.setImageResource(context.getResources().getIdentifier("ic_clinic", "mipmap", context.getPackageName()));
+        icon.setImageResource(R.mipmap.ic_hospital);
         healtFacilityName.setText(healthFacility.getName());
+        city.setText(healthFacility.getCity().getCity());
+        country.setText(healthFacility.getCity().getContry());
     }
 
     @Override
@@ -62,5 +70,11 @@ public class HealthFacilityAdapter extends BaseAbstractAdapter {
     @Override
     public long getItemId(int position) {
         return healthFacilities.get(position).hashCode();
+    }
+
+    @Override
+    public void setFilter(List<HealthFacility> items) {
+        this.healthFacilities = items;
+        notifyDataSetChanged();
     }
 }

@@ -4,11 +4,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="6dp"
-    tools:context="mz.co.txova.msaude.fragment.DoctorFragment">
+    tools:context="mz.co.msaude.mobile.fragment.DoctorFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="2dp"
+        android:background="#ccc"
+        android:padding="3dp"
+        android:text="Médicos Disponíveis"
+        android:textAlignment="textEnd"
+        android:textColor="#0b5463"
+        android:textSize="7pt"
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/fragment_doctors"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:listSelector="#d1ecff" />
 
 </LinearLayout>

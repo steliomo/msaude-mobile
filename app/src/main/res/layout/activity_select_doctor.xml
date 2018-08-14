@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="mz.co.txova.msaude.activities.SelectDoctorActivity">
+    tools:context="mz.co.msaude.mobile.activities.SelectDoctorActivity">
 
     <include
         android:id="@+id/toolbar"

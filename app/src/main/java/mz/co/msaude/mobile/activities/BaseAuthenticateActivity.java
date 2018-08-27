@@ -1,5 +1,6 @@
 package mz.co.msaude.mobile.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 /**
@@ -11,7 +12,10 @@ public abstract class BaseAuthenticateActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        startActivity(new Intent(this, LoginActivity.class));
+
         onMhealthCreate(savedInstanceState);
+
     }
 
     public abstract void onMhealthCreate(Bundle bundle);

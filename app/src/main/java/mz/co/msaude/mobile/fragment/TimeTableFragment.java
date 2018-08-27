@@ -177,7 +177,7 @@ public class TimeTableFragment extends BaseFragment {
     }
 
     @Nullable
-    @Override
+
     public VerificationError verifyStep() {
         boolean hasDate = getArguments() != null ? getArguments().getBoolean("hasDate") : false;
 
@@ -196,12 +196,12 @@ public class TimeTableFragment extends BaseFragment {
         return null;
     }
 
-    @Override
+
     public void onSelected() {
 
     }
 
-    @Override
+
     public void onError(@NonNull VerificationError error) {
         Snackbar.make(getView(), error.getErrorMessage(), Snackbar.LENGTH_SHORT).show();
     }

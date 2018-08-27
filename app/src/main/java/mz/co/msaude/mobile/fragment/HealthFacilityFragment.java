@@ -66,7 +66,7 @@ public class HealthFacilityFragment extends BaseFragment {
     }
 
     @Nullable
-    @Override
+
     public VerificationError verifyStep() {
 
         if (healthFacility != null) {
@@ -76,12 +76,12 @@ public class HealthFacilityFragment extends BaseFragment {
         return new VerificationError(getString(R.string.clinic_must_be_selected));
     }
 
-    @Override
+
     public void onSelected() {
 
     }
 
-    @Override
+
     public void onError(@NonNull VerificationError error) {
         Snackbar.make(getView(), error.getErrorMessage(), Snackbar.LENGTH_SHORT).show();
     }

@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.stepstone.stepper.Step;
-
 import butterknife.ButterKnife;
 import mz.co.msaude.mobile.activities.BaseActivity;
 import mz.co.msaude.mobile.infra.SaudeApplication;
@@ -15,7 +13,7 @@ import mz.co.msaude.mobile.infra.SaudeApplication;
 /**
  * Created by Stélio Moiane on 6/15/17.
  */
-public abstract class BaseFragment extends Fragment implements Step {
+public abstract class BaseFragment extends Fragment {
 
     protected SaudeApplication application;
 

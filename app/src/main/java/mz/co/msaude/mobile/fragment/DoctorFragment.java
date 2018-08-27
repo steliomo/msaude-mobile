@@ -91,7 +91,6 @@ public class DoctorFragment extends BaseFragment {
     }
 
     @Nullable
-    @Override
     public VerificationError verifyStep() {
 
         if (doctor != null) {
@@ -101,11 +100,11 @@ public class DoctorFragment extends BaseFragment {
         return new VerificationError(getString(R.string.doctor_must_be_selected));
     }
 
-    @Override
+
     public void onSelected() {
     }
 
-    @Override
+
     public void onError(@NonNull VerificationError error) {
         Snackbar.make(getView(), error.getErrorMessage(), Snackbar.LENGTH_SHORT).show();
     }

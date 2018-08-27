@@ -15,7 +15,6 @@ import mz.co.msaude.mobile.infra.SaudeApplication;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     protected SaudeApplication application;

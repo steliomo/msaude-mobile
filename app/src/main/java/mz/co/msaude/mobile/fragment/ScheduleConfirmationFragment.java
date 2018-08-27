@@ -90,17 +90,17 @@ public class ScheduleConfirmationFragment extends BaseFragment {
     }
 
     @Nullable
-    @Override
+
     public VerificationError verifyStep() {
         return null;
     }
 
-    @Override
+
     public void onSelected() {
         populateConsultation();
     }
 
-    @Override
+
     public void onError(@NonNull VerificationError error) {
     }
 }

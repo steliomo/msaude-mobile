@@ -10,6 +10,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/courgette</item>
     </style>
 
     <style name="activated" parent="AppTheme">

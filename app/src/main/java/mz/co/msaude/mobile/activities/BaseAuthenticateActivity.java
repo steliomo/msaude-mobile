@@ -12,7 +12,11 @@ public abstract class BaseAuthenticateActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startActivity(new Intent(this, LoginActivity.class));
+        if (!application.isLoggedIn()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
 
         onMhealthCreate(savedInstanceState);
 

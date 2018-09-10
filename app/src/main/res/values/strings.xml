@@ -33,4 +33,14 @@
     <string name="title_activity_health_facility">HealthFacilityActivity</string>
     <string name="title_activity_select_doctor">SelectDoctorActivity</string>
     <string name="action_delete">Delete</string>
+
+
+    <string name="communication_failure">Erros de comunicação. Por favor tente novamente...</string>
+    <string name="username_password_invalid">Credênciais inválidas...</string>
+    <string name="sign_up_success">O Utilizador for cadastrado com sucesso... Seja bemvindo</string>
+    <string name="sign_up_failure">Error ao cadastar o utilizador...</string>
+    <string name="wait">Aguarde...</string>
+    <string name="processing_request">A processar o pedido...</string>
+    <string name="reset_password_failure">Não foi possivel concluir o pedido. Por favor tente novamente...</string>
+    <string name="reset_password_success">A sua senha foi alterada com sucesso. Por favor consulte o seu email.</string>
 </resources>

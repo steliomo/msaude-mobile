@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import mz.co.msaude.mobile.activities.ConsultationsActivity;
 import mz.co.msaude.mobile.activities.HealthFacilitySelectActivity;
+import mz.co.msaude.mobile.activities.LoginActivity;
 import mz.co.msaude.mobile.activities.ScheduleConsultationActivity;
 import mz.co.msaude.mobile.activities.SearchConsultationActivity;
 import mz.co.msaude.mobile.activities.SelectCityActivity;
@@ -47,4 +48,6 @@ public interface SaudeComponent {
     void inject(HealthFacilitySelectActivity activity);
 
     void inject(SelectDoctorActivity activity);
+
+    void inject(LoginActivity activity);
 }

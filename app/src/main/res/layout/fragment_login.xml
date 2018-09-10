@@ -93,7 +93,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/fragment_login_button"
+        android:id="@+id/success_alert_dialog_ok"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -101,7 +101,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/round_layout"
+        android:background="@drawable/round_green_layout"
         android:fontFamily="@font/courgette"
         android:padding="5dp"
         android:text="Entrar"
@@ -127,12 +127,12 @@
         android:textColor="#fff"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fragment_login_sign_up"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_login_sign_up_cancel"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/fragment_login_password" />
 
     <Button
-        android:id="@+id/fragment_login_sign_up"
+        android:id="@+id/fragment_login_sign_up_cancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"

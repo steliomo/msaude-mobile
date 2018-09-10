@@ -1,8 +1,6 @@
 package mz.co.msaude.mobile.fragment;
 
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.EditText;
 
@@ -30,6 +28,8 @@ public class LoginFragment extends BaseFragment {
 
     private LoginDelegate delegate;
 
+    private PhoneFormatter formatter;
+
     @Override
     public int getResourceId() {
         return R.layout.fragment_login;
@@ -41,6 +41,7 @@ public class LoginFragment extends BaseFragment {
         this.validators = new ArrayList<>();
         configurePhoneNumber(username);
         addStandardValidation(password);
+        formatter = new PhoneFormatter();
     }
 
     private void configurePhoneNumber(TextInputLayout phoneNumber) {
@@ -54,7 +55,7 @@ public class LoginFragment extends BaseFragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     String phoneNumberValue = editText.getText().toString();
-                    editText.setText(PhoneFormatter.remove(phoneNumberValue));
+                    editText.setText(formatter.remove(phoneNumberValue));
                 } else {
                     validator.isValid();
                 }
@@ -78,7 +79,7 @@ public class LoginFragment extends BaseFragment {
         });
     }
 
-    @OnClick(R.id.fragment_login_button)
+    @OnClick(R.id.success_alert_dialog_ok)
     public void onClickLoginButton() {
 
         for (Validator validator : validators) {
@@ -86,18 +87,21 @@ public class LoginFragment extends BaseFragment {
                 return;
             }
         }
-        Snackbar.make(username, "pode logar", Snackbar.LENGTH_SHORT).show();
+
+        delegate.login(formatter.remove(getText(username)), getText(password));
     }
 
     @OnClick(R.id.fragment_login_forget_password)
     public void onClickForgetPasswordButton() {
-
-        Snackbar.make(username, "Senha Esquecida", Snackbar.LENGTH_SHORT).show();
+        delegate.addResetPasswordFragment();
     }
 
-    @OnClick(R.id.fragment_login_sign_up)
+    @OnClick(R.id.fragment_login_sign_up_cancel)
     public void onClickSignUpButton() {
         delegate.addSignUpFragment();
-        Snackbar.make(username, "Registar-se.....", Snackbar.LENGTH_SHORT).show();
+    }
+
+    private String getText(TextInputLayout textInputLayout) {
+        return textInputLayout.getEditText().getText().toString();
     }
 }

@@ -3,9 +3,11 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#058ccf"
+    android:background="#035883"
+    android:fontFamily="@font/courgette"
     android:minHeight="?attr/actionBarSize"
-    app:titleTextColor="#FFF"
     app:navigationIcon="@mipmap/ic_menu"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    app:theme="@style/AppTheme" />
+    app:theme="@style/AppTheme"
+    app:title="Minha Sáude"
+    app:titleTextColor="#FFF" />

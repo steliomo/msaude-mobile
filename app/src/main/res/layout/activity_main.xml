@@ -4,6 +4,10 @@
     android:background="#fff"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -44,7 +48,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/main_doctors"
+                android:id="@+id/main_exams"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -56,12 +60,12 @@
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:background="@mipmap/ic_doctor" />
+                    android:background="@mipmap/ic_exams" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Médicos"
+                    android:text="Análises"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="8pt"
@@ -131,7 +135,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/main_exams"
+                android:id="@+id/main_doctors"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -143,12 +147,12 @@
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:background="@mipmap/ic_exams" />
+                    android:background="@mipmap/ic_doctor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Análises"
+                    android:text="Médicos"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="8pt"
@@ -185,9 +189,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
 
 </LinearLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/success_alert_dialog_image_view"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:background="#035883"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/success_alert_dialog_logo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/success_alert_dialog_image_view"
+        app:layout_constraintEnd_toEndOf="@+id/success_alert_dialog_image_view"
+        app:layout_constraintStart_toStartOf="@+id/success_alert_dialog_image_view"
+        app:layout_constraintTop_toTopOf="@+id/success_alert_dialog_image_view"
+        app:srcCompat="@mipmap/ic_logo" />
+
+    <TextView
+        android:id="@+id/success_alert_dialog_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/courgette"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:textColor="#000"
+        app:layout_constraintEnd_toEndOf="@+id/success_alert_dialog_image_view"
+        app:layout_constraintStart_toStartOf="@+id/success_alert_dialog_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/success_alert_dialog_image_view"
+        tools:text="O Utilizador for cadastrado com sucesso... Seja bemvindo" />
+
+    <Button
+        android:id="@+id/success_alert_dialog_ok"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/round_red_layout"
+        android:drawableEnd="@drawable/ic_circle_remove"
+        android:drawableRight="@drawable/ic_circle_remove"
+        android:fontFamily="@font/courgette"
+        android:paddingRight="10dp"
+        android:text="Ok"
+        android:textAllCaps="false"
+        android:textColor="#FFF"
+        android:textSize="7pt"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/success_alert_dialog_message"
+        app:layout_constraintStart_toStartOf="@+id/success_alert_dialog_message"
+        app:layout_constraintTop_toBottomOf="@+id/success_alert_dialog_message"
+        app:layout_constraintVertical_bias="0.0" />
+
+</android.support.constraint.ConstraintLayout>

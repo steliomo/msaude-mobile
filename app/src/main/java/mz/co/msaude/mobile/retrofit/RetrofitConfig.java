@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitConfig {
 
-    public static final String BASE_URL = "http://192.168.43.23:8080/services/";
+    public static final String BASE_URL = "http://10.0.2.2:8080/services/";
 
     private OkHttpClient configureClient() {
 

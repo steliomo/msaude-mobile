@@ -17,6 +17,9 @@ public abstract class BaseFragment extends Fragment {
 
     protected SaudeApplication application;
 
+    public BaseFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

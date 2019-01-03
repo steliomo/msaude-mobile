@@ -80,11 +80,12 @@ public class SignUpFragment extends BaseFragment {
     private void configureFields() {
         configureField(nameTxt, new StandardValidator(nameTxt));
         configureField(surnameTxt, new StandardValidator(surnameTxt));
-        configureField(passwordTxt, new StandardValidator(passwordTxt));
-        configureField(emailTxt, new EmailValidator(emailTxt));
 
         configureDateOfBirth(dateOfBirthTxt);
         configurePhoneNumber(phoneNumberTxt);
+
+        configureField(passwordTxt, new StandardValidator(passwordTxt));
+        configureField(emailTxt, new EmailValidator(emailTxt));
     }
 
     private void configurePhoneNumber(TextInputLayout phoneNumber) {
@@ -188,15 +189,17 @@ public class SignUpFragment extends BaseFragment {
         final Validator validator = new DateOfBirthValidator(inputLayout);
         validators.add(validator);
 
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        editText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    showDatePicker(editText);
-                } else {
-                    validator.isValid();
-                }
+            public void onClick(View view) {
+                hideKeyboard(view);
+                showDatePicker(editText);
             }
         });
+    }
+
+    private void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

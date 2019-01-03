@@ -1,42 +1,22 @@
 package mz.co.msaude.mobile.fragment;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.widget.ListView;
-
-import com.stepstone.stepper.VerificationError;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import java.util.List;
-
-import javax.inject.Inject;
+import android.support.v7.widget.RecyclerView;
 
 import butterknife.BindView;
-import butterknife.OnItemClick;
 import mz.co.msaude.mobile.R;
 import mz.co.msaude.mobile.adapter.DoctorAdapter;
-import mz.co.msaude.mobile.component.SaudeComponent;
-import mz.co.msaude.mobile.consultation.model.QueryResult;
-import mz.co.msaude.mobile.doctor.dto.DoctorDTO;
-import mz.co.msaude.mobile.doctor.event.DoctorEvent;
+import mz.co.msaude.mobile.delegate.ScheduleConsultationDelegate;
+import mz.co.msaude.mobile.delegate.ScheduleDelegate;
 import mz.co.msaude.mobile.doctor.model.Doctor;
-import mz.co.msaude.mobile.healthfacility.event.HealthFacilityEvent;
+import mz.co.msaude.mobile.listner.ClickListner;
 
 
-public class DoctorFragment extends BaseFragment {
+public class DoctorFragment extends BaseFragment implements ClickListner<Doctor> {
 
-    @BindView(R.id.fragment_doctors)
-    ListView doctorsView;
+    @BindView(R.id.fragment_doctor_recycle_view)
+    RecyclerView doctorRecycleView;
 
-    @Inject
-    EventBus eventBus;
-
-    private Doctor doctor;
-
-    private DoctorDTO doctorDTO;
+    private ScheduleConsultationDelegate delegate;
 
     @Override
     public int getResourceId() {
@@ -45,67 +25,20 @@ public class DoctorFragment extends BaseFragment {
 
     @Override
     public void onCreateView() {
-        SaudeComponent component = application.getComponent();
-        component.inject(this);
-        eventBus.register(this);
+        delegate = (ScheduleConsultationDelegate) getActivity();
+        delegate.setFragmentTitle(getArguments().getString(ScheduleDelegate.TITLE));
 
-        QueryResult result = (QueryResult) getActivity().getIntent().getSerializableExtra(QueryResult.QUERY_RESULT);
-
-        if (!(result instanceof DoctorDTO)) {
-            return;
-        }
-
-        doctorDTO = (DoctorDTO) result;
-        populateDoctorView(doctorDTO.getDoctors());
-    }
-
-    private void populateDoctorView(List<Doctor> doctors) {
-        DoctorAdapter adapter = new DoctorAdapter(getActivity(), doctors);
-        doctorsView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        doctorsView.setAdapter(adapter);
-    }
-
-    @OnItemClick(R.id.fragment_doctors)
-    public void onItemClick(final int position) {
-        doctor = (Doctor) doctorsView.getItemAtPosition(position);
-        doctorDTO.setDoctor(doctor);
-        eventBus.post(new DoctorEvent(doctorDTO));
-    }
-
-    @Subscribe
-    public void onEvent(HealthFacilityEvent event) {
-        populateDoctorView(event.getHealthFacilityDTO().getHealthFacility().getDoctors());
-        if (doctorDTO == null) {
-            doctorDTO = new DoctorDTO();
-        }
-
-        doctorDTO.setDoctorAvailability(event.getHealthFacilityDTO().getDoctorAvailability());
-
-        doctor = null;
+        DoctorAdapter adapter = new DoctorAdapter(getActivity(), delegate.getDoctors());
+        adapter.setItemClickListner(this);
+        doctorRecycleView.setAdapter(adapter);
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        eventBus.unregister(this);
+    public void onClick(Doctor doctor) {
+        delegate.onSelectDoctor(doctor);
     }
 
-    @Nullable
-    public VerificationError verifyStep() {
-
-        if (doctor != null) {
-            return null;
-        }
-
-        return new VerificationError(getString(R.string.doctor_must_be_selected));
-    }
-
-
-    public void onSelected() {
-    }
-
-
-    public void onError(@NonNull VerificationError error) {
-        Snackbar.make(getView(), error.getErrorMessage(), Snackbar.LENGTH_SHORT).show();
+    @Override
+    public void onLongClick(Doctor doctor) {
     }
 }

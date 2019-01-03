@@ -1,8 +1,11 @@
 package mz.co.msaude.mobile.user.model;
 
 import mz.co.msaude.mobile.patient.model.Gender;
+import mz.co.msaude.mobile.util.UuidFactory;
 
 public class User {
+
+    private String uuid;
 
     private String name;
 
@@ -17,6 +20,18 @@ public class User {
     private String password;
 
     private String email;
+
+    public User() {
+        this.uuid = UuidFactory.generate();
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
 
     public String getName() {
         return name;
@@ -72,5 +87,9 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFullname() {
+        return name + " " + surname;
     }
 }

@@ -1,200 +1,193 @@
 package mz.co.msaude.mobile.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.view.ActionMode;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.HapticFeedbackConstants;
-import android.view.Menu;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import mz.co.msaude.mobile.R;
-import mz.co.msaude.mobile.adapter.ConsultationAdapter;
+import mz.co.msaude.mobile.adapter.ServiceViewPagerAdapter;
 import mz.co.msaude.mobile.component.SaudeComponent;
-import mz.co.msaude.mobile.consultation.event.ConsultationEvent;
 import mz.co.msaude.mobile.consultation.model.Consultation;
-import mz.co.msaude.mobile.consultation.model.Hour;
-import mz.co.msaude.mobile.decoration.DividerItemDecoration;
-import mz.co.msaude.mobile.doctor.model.Doctor;
-import mz.co.msaude.mobile.healthfacility.model.City;
-import mz.co.msaude.mobile.healthfacility.model.HealthFacility;
-import mz.co.msaude.mobile.listner.ClickListner;
+import mz.co.msaude.mobile.consultation.model.ConsultationStatus;
+import mz.co.msaude.mobile.consultation.service.ConsultationService;
+import mz.co.msaude.mobile.delegate.ConsultationDelegate;
+import mz.co.msaude.mobile.dialog.AlertDialogManager;
+import mz.co.msaude.mobile.dialog.ProgressDialogManager;
+import mz.co.msaude.mobile.fragment.ConsultationMainFragment;
+import mz.co.msaude.mobile.listner.AlertListner;
+import mz.co.msaude.mobile.listner.ResponseListner;
 
-public class ConsultationsActivity extends BaseAuthenticateActivity implements ActionMode.Callback, ClickListner {
+import static mz.co.msaude.mobile.consultation.model.ConsultationStatus.*;
 
-    @BindView(R.id.add_new_consultation)
-    ImageButton addNewconsultation;
+public class ConsultationsActivity extends BaseAuthenticateActivity implements ConsultationDelegate, PopupMenu.OnMenuItemClickListener {
 
-    @BindView(R.id.consultations)
-    RecyclerView consultations;
+    private static final String FRAGMENT_POSITION = "FRAGMENT_POSITION";
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.consultation_view_pager)
+    ViewPager viewPager;
+
+    @BindView(R.id.consultation_tabs)
+    TabLayout tabs;
 
     @Inject
     EventBus eventBus;
 
-    private List<Consultation> consultationList;
+    @Inject
+    ConsultationService consultationService;
 
-    private ActionMode actionMode;
+    private Consultation consultation;
 
-    private ConsultationAdapter adapter;
+    private AlertDialogManager alertDialogManager;
+
+    private ProgressDialog progressBar;
+
+    private ServiceViewPagerAdapter adapter;
 
     @Override
     public void onMhealthCreate(Bundle bundle) {
+
         setContentView(R.layout.activity_consultations);
         SaudeComponent component = application.getComponent();
         component.inject(this);
-        eventBus.register(this);
 
-        toolbar.setTitle("Consultas");
+        toolbar.setTitle(R.string.consultations);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
 
-        Doctor alima = new Doctor("Alima", "Moiane", "Pediatra");
-        HealthFacility clinicare = new HealthFacility("Clinicare", "clinicare@gmail.com", null, null);
-        clinicare.setCity(new City("Maputo", "Moçambique"));
-
-        City city = new City("Maputo", "Moçambique");
-
-        Consultation consultation = new Consultation(city, "Pediatria");
-        consultation.setHealthFacility(clinicare);
-        consultation.setDoctor(alima);
-        consultation.setScheduledDate("28-08-1984");
-        consultation.setHour(Hour.TEN_HALF_TO_ELEVEN);
-        consultationList = new ArrayList<>();
-
-        populateConsultation(consultation);
-        registerForContextMenu(consultations);
-    }
-
-    private void populateConsultation(Consultation consultation) {
-        consultationList.add(consultation);
-        adapter = new ConsultationAdapter(this, consultationList, this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        consultations.setLayoutManager(layoutManager);
-        consultations.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        consultations.setAdapter(adapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_consultations, menu);
-        return true;
-    }
-
-    @OnClick(R.id.add_new_consultation)
-    public void OnclickAddNewConsultation() {
-
-        if (actionMode != null) {
-            actionMode.finish();
-            clear();
-        }
-
-        Toast.makeText(this, "Nova consulta", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, SearchConsultationActivity.class));
-    }
-
-    @Subscribe
-    public void onEvent(ConsultationEvent event) {
-        populateConsultation(event.getConsultation());
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        eventBus.unregister(this);
-    }
-
-    @Override
-    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        mode.getMenuInflater().inflate(R.menu.menu_delete, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-        return false;
-    }
-
-    @Override
-    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_delete:
-                deleteConsultations();
-                actionMode.finish();
-                break;
-
-        }
-
-        return false;
-    }
-
-    @Override
-    public void onDestroyActionMode(ActionMode mode) {
-        this.actionMode = null;
-        this.clear();
-    }
-
-    private void deleteConsultations() {
-        adapter.delete();
-    }
-
-    @Override
-    public void onClick(View view, int position) {
-
-        if (actionMode == null) {
-            return;
-        }
-
-        adapter.toggleSelection(view, position);
-        actionMode.setTitle(String.valueOf(adapter.getSelectedItemsCount()));
-
-        if (adapter.getSelectedItems().size() == 0 && actionMode != null) {
-            actionMode.finish();
-        }
-
-        view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-        Snackbar.make(view, "TESTE", Snackbar.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onLongClick(View view, int position) {
-
-        if (actionMode == null) {
-            actionMode = startSupportActionMode(this);
-        }
-
-        adapter.toggleSelection(view, position);
-        actionMode.setTitle(String.valueOf(adapter.getSelectedItemsCount()));
-
-        view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-        Snackbar.make(view, "TESTE2", Snackbar.LENGTH_SHORT).show();
-    }
-
-    private void clear() {
-
-        for (Integer viewPosition : adapter.getSelectedItems()) {
-
-            RecyclerView.ViewHolder viewHolder = consultations.findViewHolderForAdapterPosition(viewPosition.intValue());
-
-            if (viewHolder != null) {
-                viewHolder.itemView.setActivated(Boolean.FALSE);
-                View selectedIcon = viewHolder.itemView.findViewById(R.id.selected_row);
-                selectedIcon.setVisibility(View.GONE);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
+        });
+
+        adapter = new ServiceViewPagerAdapter(getSupportFragmentManager());
+
+        adapter.addFragment(getConsultationMainFragment(PENDING, 0), getString(R.string.pending));
+        adapter.addFragment(getConsultationMainFragment(ACCEPTED, 1), getString(R.string.accepted));
+
+        viewPager.setAdapter(adapter);
+        tabs.setupWithViewPager(viewPager);
+
+        alertDialogManager = new AlertDialogManager(this);
+        ProgressDialogManager progressDialogManager = new ProgressDialogManager(this);
+        progressBar = progressDialogManager.getProgressBar(getString(R.string.wait), getString(R.string.processing_request));
+    }
+
+    @NonNull
+    private ConsultationMainFragment getConsultationMainFragment(ConsultationStatus consultationStatus, int position) {
+        ConsultationMainFragment pendingFragment = new ConsultationMainFragment();
+
+        Bundle arguments = new Bundle();
+        arguments.putString(consultationStatus.toString(), consultationStatus.toString());
+        arguments.putInt(FRAGMENT_POSITION, position);
+
+        pendingFragment.setArguments(arguments);
+        return pendingFragment;
+    }
+
+    @OnClick(R.id.consultation_schedule_btn)
+    public void onClickConsultationScheduleBtn() {
+        startActivity(new Intent(ConsultationsActivity.this, ScheduleConsultationActivity.class));
+    }
+
+    @Override
+    public void onVerticalMenuClickListner(View view, Consultation consultation) {
+        this.consultation = consultation;
+
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        showPopupMenuIcon(popupMenu);
+
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.vertical_menu);
+        popupMenu.show();
+    }
+
+    private void showPopupMenuIcon(PopupMenu popupMenu) {
+        try {
+            Field[] fields = popupMenu.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if ("mPopup".equals(field.getName())) {
+                    field.setAccessible(true);
+                    Object menuPopupHelper = field.get(popupMenu);
+                    Class<?> classPopupHelper = Class.forName(menuPopupHelper.getClass().getName());
+                    Method setForceShowIcon = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                    setForceShowIcon.invoke(menuPopupHelper, true);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        adapter.clear();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+
+        switch (menuItem.getItemId()) {
+
+            case R.id.action_cancel:
+                alertDialogManager.showAlert(getString(R.string.cancelation_confirm), R.layout.alert_dialog, new AlertListner() {
+                    @Override
+                    public void perform() {
+                        progressBar.show();
+
+                        consultation.setConsultationStatus(ConsultationStatus.CANCELED);
+                        consultationService.cancelConsultation(application.getToken(), consultation.getId(), consultation, new ResponseListner<Consultation>() {
+
+                            @Override
+                            public void success(Consultation consultation) {
+                                progressBar.dismiss();
+
+                                if (consultation == null) {
+                                    alertDialogManager.showAlert(getString(R.string.communication_failure), R.layout.error_alert_dialog, null);
+                                    return;
+                                }
+
+                                alertDialogManager.showAlert(getString(R.string.consultation_canceled), R.layout.success_alert_dialog, new AlertListner() {
+                                    @Override
+                                    public void perform() {
+                                        reloadFragmentData();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void error(String message) {
+                                progressBar.dismiss();
+                                alertDialogManager.showAlert(getString(R.string.communication_failure), R.layout.error_alert_dialog, null);
+                            }
+                        });
+                    }
+                });
+
+                return true;
+        }
+
+        return false;
+    }
+
+    private void reloadFragmentData() {
+        int position = tabs.getSelectedTabPosition();
+        ConsultationMainFragment fragment = (ConsultationMainFragment) adapter.getItem(position);
+        fragment.onRefresh();
     }
 }

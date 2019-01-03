@@ -80,7 +80,7 @@ public class LoginActivity extends BaseActivity implements LoginDelegate {
     }
 
     @Override
-    public void signUp(User user) {
+    public void signUp(final User user) {
 
         final ProgressDialog progressBar = dialogManager.getProgressBar(getString(R.string.wait), getString(R.string.processing_request));
         progressBar.show();
@@ -98,7 +98,8 @@ public class LoginActivity extends BaseActivity implements LoginDelegate {
                 alertDialogManager.showAlert(getString(R.string.sign_up_success), R.layout.success_alert_dialog, new AlertListner() {
                     @Override
                     public void perform() {
-                        mainActivity(progressBar, responseUser.getPhoneNumber(), responseUser.getPassword());
+                        sharedPreferencesManager.setUserInfo(responseUser);
+                        mainActivity(progressBar, user.getPhoneNumber(), user.getPassword());
                     }
                 });
             }
@@ -126,14 +127,15 @@ public class LoginActivity extends BaseActivity implements LoginDelegate {
 
         userService.login(username, password, new ResponseListner<User>() {
             @Override
-            public void success(User response) {
+            public void success(User user) {
 
-                if (response == null) {
+                if (user == null) {
                     progressBar.dismiss();
                     alertDialogManager.showAlert(getString(R.string.username_password_invalid), R.layout.error_alert_dialog, null);
                     return;
                 }
 
+                sharedPreferencesManager.setUserInfo(user);
                 mainActivity(progressBar, username, password);
             }
 
@@ -154,9 +156,9 @@ public class LoginActivity extends BaseActivity implements LoginDelegate {
 
         userService.resetPassword(email, new ResponseListner<User>() {
             @Override
-            public void success(User response) {
+            public void success(User user) {
 
-                if (response == null) {
+                if (user == null) {
                     progressBar.dismiss();
                     alertDialogManager.showAlert(getString(R.string.reset_password_failure), R.layout.error_alert_dialog, null);
                     return;

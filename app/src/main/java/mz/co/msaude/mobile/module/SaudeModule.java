@@ -9,16 +9,17 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import mz.co.msaude.mobile.consultation.service.AllConsultationQueryFilter;
-import mz.co.msaude.mobile.consultation.service.ConsultationDateQueryFilter;
-import mz.co.msaude.mobile.consultation.service.ConsultationQueryFilter;
 import mz.co.msaude.mobile.consultation.service.ConsultationService;
 import mz.co.msaude.mobile.consultation.service.ConsultationServiceImpl;
-import mz.co.msaude.mobile.consultation.service.DefaultConsultationQueryFilter;
-import mz.co.msaude.mobile.consultation.service.DoctorConsultationQueryFilter;
-import mz.co.msaude.mobile.consultation.service.HealthFacilityAndDoctorConsultationQueryFilter;
-import mz.co.msaude.mobile.consultation.service.HealthFacilityConsultationQueryFilter;
+import mz.co.msaude.mobile.doctor.service.DoctorService;
+import mz.co.msaude.mobile.doctor.service.DoctorServiceImpl;
+import mz.co.msaude.mobile.exam.service.ExamService;
+import mz.co.msaude.mobile.exam.service.ExamServiceImpl;
 import mz.co.msaude.mobile.infra.SharedPreferencesManager;
+import mz.co.msaude.mobile.location.service.LocationService;
+import mz.co.msaude.mobile.location.service.LocationServiceImpl;
+import mz.co.msaude.mobile.medicalservicetype.service.MedicalServiceTypeService;
+import mz.co.msaude.mobile.medicalservicetype.service.MedicalServiceTypeServiceImpl;
 import mz.co.msaude.mobile.patient.service.PatientService;
 import mz.co.msaude.mobile.patient.service.PatientServiceImpl;
 import mz.co.msaude.mobile.retrofit.RetrofitConfig;
@@ -68,48 +69,32 @@ public class SaudeModule {
     }
 
     @Provides
-    @Named("defaultConsultationFilter")
-    public ConsultationQueryFilter provideDefaultConsultationQueryFilter() {
-        return new DefaultConsultationQueryFilter();
-    }
-
-    @Provides
-    @Named("healthFacilityConsultationQueryFilter")
-    public ConsultationQueryFilter provideHealthFacilityConsultationQueryFilter() {
-        return new HealthFacilityConsultationQueryFilter();
-    }
-
-    @Provides
-    @Named("doctorConsultationQueryFilter")
-    public ConsultationQueryFilter provideDoctorConsultationQueryFilter() {
-        return new DoctorConsultationQueryFilter();
-    }
-
-    @Provides
-    @Named("healthFacilityAndDoctorConsultationQueryFilter")
-    public ConsultationQueryFilter provideHealthFacilityAndDoctorConsultationQueryFilter() {
-        return new HealthFacilityAndDoctorConsultationQueryFilter();
-    }
-
-    @Provides
-    @Named("allConsultationQueryFilter")
-    public ConsultationQueryFilter provideAllConsultationQueryFilter() {
-        return new AllConsultationQueryFilter();
-    }
-
-    @Provides
-    @Named("consultationDateQueryFilter")
-    public ConsultationQueryFilter provideConsultationDateQueryFilter() {
-        return new ConsultationDateQueryFilter();
-    }
-
-    @Provides
     public PatientService providePatientService(PatientServiceImpl patientService) {
         return patientService;
     }
 
     @Provides
-    public UserService provideUserServiceImpl (UserServiceImpl userService){
+    public UserService provideUserService(UserServiceImpl userService) {
         return userService;
+    }
+
+    @Provides
+    public LocationService proviceLocationService(LocationServiceImpl locationService) {
+        return locationService;
+    }
+
+    @Provides
+    public DoctorService proviceDoctorService(DoctorServiceImpl doctorService) {
+        return doctorService;
+    }
+
+    @Provides
+    public MedicalServiceTypeService provide(MedicalServiceTypeServiceImpl medicalServiceTypeService) {
+        return medicalServiceTypeService;
+    }
+
+    @Provides
+    public ExamService proviceExamService(ExamServiceImpl examService) {
+        return examService;
     }
 }

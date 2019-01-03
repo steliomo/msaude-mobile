@@ -1,73 +1,53 @@
 package mz.co.msaude.mobile.adapter;
 
 import android.content.Context;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 
-import butterknife.BindView;
 import mz.co.msaude.mobile.R;
 import mz.co.msaude.mobile.doctor.model.Doctor;
+import mz.co.msaude.mobile.holder.DoctorViewHolder;
+import mz.co.msaude.mobile.listner.ClickListner;
 
-/**
- * Created by Stélio Moiane on 6/16/17.
- */
-public class DoctorAdapter extends BaseAbstractAdapter implements FilterableAdapter<Doctor> {
+public class DoctorAdapter extends RecyclerView.Adapter<DoctorViewHolder> {
 
-    @BindView(R.id.doctor_icon)
-    ImageView doctorIcon;
+    private final Context context;
 
-    @BindView(R.id.doctor_full_name)
-    TextView doctorFullName;
+    private final List<Doctor> doctors;
 
-    @BindView(R.id.doctor_category)
-    TextView doctorCategory;
+    private ClickListner listner;
 
-    private Context context;
-    private List<Doctor> doctors;
-
-    public DoctorAdapter(final Context context, final List<Doctor> doctors) {
+    public DoctorAdapter(Context context, List<Doctor> doctors) {
         this.context = context;
         this.doctors = doctors;
     }
 
+    @NonNull
     @Override
-    public Context getContext() {
-        return this.context;
+    public DoctorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.list_items_default, parent, false);
+        DoctorViewHolder holder = new DoctorViewHolder(view);
+        holder.setItemClicListner(listner);
+        return holder;
     }
 
     @Override
-    public int getResourceId() {
-        return R.layout.list_doctors;
-    }
-
-    @Override
-    public void onCreateView(int position) {
+    public void onBindViewHolder(@NonNull DoctorViewHolder holder, int position) {
         Doctor doctor = doctors.get(position);
-
-        doctorFullName.setText(doctor.getFullName());
-        doctorCategory.setText(doctor.getCategory());
+        holder.bind(doctor);
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return doctors.size();
     }
 
-    @Override
-    public Doctor getItem(int position) {
-        return doctors.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return doctors.get(position).hashCode();
-    }
-
-    @Override
-    public void setFilter(List<Doctor> items) {
-        this.doctors = items;
-        notifyDataSetChanged();
+    public void setItemClickListner(ClickListner listner) {
+        this.listner = listner;
     }
 }

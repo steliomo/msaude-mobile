@@ -7,7 +7,7 @@
     <application
         android:name=".infra.SaudeApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -53,15 +53,9 @@
             android:name=".activities.SelectConsultationTypeActivity"
             android:label="@string/title_activity_select_consultation_type"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activities.HealthFacilitySelectActivity"
-            android:label="@string/title_activity_health_facility"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activities.SelectDoctorActivity"
-            android:label="@string/title_activity_select_doctor"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.ExamsActivity" />
+        <activity android:name=".activities.ScheduleExamActivity"></activity>
     </application>
 
 </manifest>

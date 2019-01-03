@@ -1,11 +1,7 @@
 package mz.co.msaude.mobile.fragment;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
-
-import com.stepstone.stepper.VerificationError;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -16,73 +12,52 @@ import butterknife.OnItemClick;
 import mz.co.msaude.mobile.R;
 import mz.co.msaude.mobile.activities.ScheduleConsultationActivity;
 import mz.co.msaude.mobile.adapter.HealthFacilityAdapter;
+import mz.co.msaude.mobile.adapter.LocalityAdapter;
 import mz.co.msaude.mobile.component.SaudeComponent;
 import mz.co.msaude.mobile.consultation.dto.HealthFacilityDTO;
 import mz.co.msaude.mobile.consultation.model.Consultation;
 import mz.co.msaude.mobile.consultation.model.QueryResult;
+import mz.co.msaude.mobile.delegate.ScheduleConsultationDelegate;
+import mz.co.msaude.mobile.delegate.ScheduleDelegate;
 import mz.co.msaude.mobile.healthfacility.event.HealthFacilityEvent;
 import mz.co.msaude.mobile.healthfacility.model.HealthFacility;
+import mz.co.msaude.mobile.listner.ClickListner;
+import mz.co.msaude.mobile.location.model.Locality;
 
 public class HealthFacilityFragment extends BaseFragment {
 
-    @BindView(R.id.fragment_health_facility)
-    ListView healthFacilitiesView;
+    @BindView(R.id.fragment_locality_recycle_view)
+    RecyclerView localityRecycleView;
 
-    @Inject
-    EventBus eventBus;
-
-    private HealthFacility healthFacility;
-
-    private HealthFacilityDTO healthFacilityDTO;
-
-    @Override
-    public void onCreateView() {
-        SaudeComponent component = application.getComponent();
-        component.inject(this);
-
-        ScheduleConsultationActivity activity = (ScheduleConsultationActivity) getActivity();
-        healthFacilityDTO = (HealthFacilityDTO) activity.getIntent().getSerializableExtra(QueryResult.QUERY_RESULT);
-        Consultation consultation = activity.getConsultation();
-        consultation.setDoctor(healthFacilityDTO.getDoctor());
-        consultation.setScheduledDate(healthFacilityDTO.getDoctorAvailability() != null ? healthFacilityDTO.getDoctorAvailability().getAvailability() : null);
-
-        HealthFacilityAdapter adapter = new HealthFacilityAdapter(activity, healthFacilityDTO.getHealthFacilities());
-
-        healthFacilitiesView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        healthFacilitiesView.setAdapter(adapter);
-    }
+    private ScheduleDelegate delegate;
 
     @Override
     public int getResourceId() {
         return R.layout.fragment_health_facility;
     }
 
-    @OnItemClick(R.id.fragment_health_facility)
-    public void onItemClick(final int position) {
-        healthFacility = (HealthFacility) healthFacilitiesView.getItemAtPosition(position);
-        healthFacilityDTO.setHealthFacility(healthFacility);
+    @Override
+    public void onCreateView() {
 
-        eventBus.post(new HealthFacilityEvent(healthFacilityDTO));
+        delegate = (ScheduleDelegate) getActivity();
+        delegate.setFragmentTitle(getArguments().getString(ScheduleDelegate.TITLE));
+
+        HealthFacilityAdapter adapter = new HealthFacilityAdapter(getActivity(), delegate.getHealthFacilities());
+        onSelectHealthFacility(adapter);
+        localityRecycleView.setAdapter(adapter);
     }
 
-    @Nullable
+    private void onSelectHealthFacility(HealthFacilityAdapter adapter) {
+        adapter.setItemClickListner(new ClickListner<HealthFacility>() {
+            @Override
+            public void onClick(HealthFacility healthFacility) {
+                delegate.onSelectHealthFacility(healthFacility);
+            }
 
-    public VerificationError verifyStep() {
+            @Override
+            public void onLongClick(HealthFacility item) {
 
-        if (healthFacility != null) {
-            return null;
-        }
-
-        return new VerificationError(getString(R.string.clinic_must_be_selected));
-    }
-
-
-    public void onSelected() {
-
-    }
-
-
-    public void onError(@NonNull VerificationError error) {
-        Snackbar.make(getView(), error.getErrorMessage(), Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 }

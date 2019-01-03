@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void signUp(User user, final ResponseListner<User> listner) {
 
-        UserResource resource = retrofit.create(UserResource.class);
+        UserResource resource = getUserResource();
         resource.signUp(user)
                 .enqueue(new Callback<User>() {
                     @Override
@@ -38,10 +38,15 @@ public class UserServiceImpl implements UserService {
                 });
     }
 
+    private UserResource getUserResource() {
+        return retrofit.create(UserResource.class);
+    }
+
     @Override
     public void login(String username, String password, final ResponseListner<User> listner) {
 
-        UserResource resource = retrofit.create(UserResource.class);
+        UserResource resource = getUserResource();
+
         resource.login(new TokenFactory(username, password).getToken())
                 .enqueue(new Callback<User>() {
                     @Override
@@ -58,7 +63,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void resetPassword(String email, final ResponseListner<User> listner) {
-        UserResource resource = retrofit.create(UserResource.class);
+
+        UserResource resource = getUserResource();
+
         resource.resetPassword(email).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {

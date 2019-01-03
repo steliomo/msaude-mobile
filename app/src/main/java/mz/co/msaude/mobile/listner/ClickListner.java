@@ -1,14 +1,12 @@
 package mz.co.msaude.mobile.listner;
 
-import android.view.View;
-
 /**
  * Created by steliomo on 10/16/17.
  */
 
-public interface ClickListner {
+public interface ClickListner<T> {
 
-    void onClick(final View view, int position);
+    void onClick(final T item);
 
-    void onLongClick(final View view, int position);
+    void onLongClick(T item);
 }

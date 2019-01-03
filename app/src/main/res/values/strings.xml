@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">mSaude</string>
+    <string name="app_name">m-Saude</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_consultations">ConsultationsActivity</string>
     <string name="title_activity_schedule_consultation">ScheduleConsultationActivity</string>
@@ -43,4 +43,31 @@
     <string name="processing_request">A processar o pedido...</string>
     <string name="reset_password_failure">Não foi possivel concluir o pedido. Por favor tente novamente...</string>
     <string name="reset_password_success">A sua senha foi alterada com sucesso. Por favor consulte o seu email.</string>
+    <string name="select_province">Seleccione a provincia:</string>
+    <string name="select_consultation_type">Seleccione o tipo de consulta:</string>
+    <string name="select_locality">Seleccione a localidade:</string>
+    <string name="select_health_facility">Seleccione a unidade sanitária:</string>
+    <string name="select_date">Seleccione a data:</string>
+    <string name="select_doctor">Seleccione o médico</string>
+    <string name="finalize_schedule">Finalização do agendamento</string>
+    <string name="select_patient">Seleccione o Paciente</string>
+    <string name="no_dependents">Sem Dependentes</string>
+    <string name="consultation_scheduled_with_success">A consulta foi agendada com sucesso! Aguarde a confirmação do horário. Obrigado</string>
+    <string name="action_edit">Alterar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="schedule_consultation">Agendar Consulta</string>
+    <string name="cancelation_confirm">Tem acerteza que deseja cancelar a consulta ?</string>
+    <string name="consultation_canceled">A consulta foi cancelada com sucesso!!</string>
+    <string name="no_facility_was_found">Nenhuma unidade sanitária foi encontrada para o tipo de consulta pretendida!!</string>
+    <string name="consultations">Consultas</string>
+    <string name="pending">Pendentes</string>
+    <string name="accepted">Agendadas</string>
+    <string name="version">© 2018 © v1.0.0</string>
+    <string name="logout">Sair</string>
+    <string name="exams">Exames</string>
+    <string name="schedule_exam">Agendar Exame</string>
+    <string name="select_exam_type">Seleccione o tipo de exame</string>
+    <string name="exam_details">Detalhes do Exame</string>
+    <string name="exam_scheduled_with_success">O exame foi agendado com sucesso! Aguarde a confirmação do horário. Obrigado</string>
+
 </resources>

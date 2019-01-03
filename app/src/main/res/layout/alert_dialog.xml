@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <ImageView
+        android:id="@+id/success_alert_dialog_image_view"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:background="#035883"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/success_alert_dialog_logo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/success_alert_dialog_image_view"
+        app:layout_constraintEnd_toEndOf="@+id/success_alert_dialog_image_view"
+        app:layout_constraintStart_toStartOf="@+id/success_alert_dialog_image_view"
+        app:layout_constraintTop_toTopOf="@+id/success_alert_dialog_image_view"
+        app:srcCompat="@mipmap/ic_logo" />
+
+    <TextView
+        android:id="@+id/success_alert_dialog_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:textColor="#000"
+        app:layout_constraintEnd_toEndOf="@+id/success_alert_dialog_image_view"
+        app:layout_constraintStart_toStartOf="@+id/success_alert_dialog_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/success_alert_dialog_image_view"
+        tools:text="Tema certeza que deseja cancelar a consulta?" />
+
+    <Button
+        android:id="@+id/success_alert_dialog_ok"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/round_green_layout"
+        android:drawableEnd="@drawable/ic_circle_check"
+        android:drawableRight="@drawable/ic_circle_check"
+        android:paddingRight="10dp"
+        android:text="Sim"
+        android:textAllCaps="false"
+        android:textColor="#FFF"
+        android:textSize="8pt"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/success_alert_dialog_no"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/success_alert_dialog_message"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <Button
+        android:id="@+id/success_alert_dialog_no"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/round_red_layout"
+        android:drawableEnd="@drawable/ic_circle_remove"
+        android:drawableRight="@drawable/ic_circle_remove"
+        android:paddingRight="10dp"
+        android:text="Não"
+        android:textAllCaps="false"
+        android:textColor="#FFF"
+        android:textSize="8pt"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/success_alert_dialog_ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/success_alert_dialog_ok" />
+
+</android.support.constraint.ConstraintLayout>

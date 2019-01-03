@@ -1,12 +1,11 @@
 package mz.co.msaude.mobile.infra;
 
 import android.app.Application;
-import android.content.SharedPreferences;
-import android.net.wifi.hotspot2.pps.Credential;
 
 import mz.co.msaude.mobile.component.DaggerSaudeComponent;
 import mz.co.msaude.mobile.component.SaudeComponent;
 import mz.co.msaude.mobile.module.SaudeModule;
+import mz.co.msaude.mobile.user.model.User;
 
 /**
  * Created by Stélio Moiane on 7/20/17.
@@ -47,5 +46,10 @@ public class SaudeApplication extends Application {
 
     public String getToken() {
         return sharedPreferencesManager.getToken();
+    }
+
+
+    public User getUserInfo() {
+        return sharedPreferencesManager.getUserInfo();
     }
 }

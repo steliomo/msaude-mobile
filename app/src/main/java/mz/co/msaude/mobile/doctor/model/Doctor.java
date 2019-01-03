@@ -5,41 +5,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import mz.co.msaude.mobile.model.GenericModel;
+import mz.co.msaude.mobile.patient.model.Gender;
+
 /**
  * Created by Stélio Moiane on 6/11/17.
  */
-public class Doctor implements Serializable {
+public class Doctor extends GenericModel {
 
-    private String firstName;
+    private String name;
 
-    private String lastName;
+    private String surname;
 
-    private String category;
-
-    private List<DoctorAvailability> doctorAvailabilities;
-
-    public Doctor(String firstName, String lastName, String category) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.category = category;
-        this.doctorAvailabilities = new ArrayList<>();
-    }
+    private Gender gender;
 
     public String getFullName() {
-        return "Dr(a). " + this.firstName + " " + this.lastName;
+        return "Dr(a). " + this.name + " " + this.surname;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public List<DoctorAvailability> getDoctorAvailabilities() {
-        return Collections.unmodifiableList(this.doctorAvailabilities);
-    }
-
-    public void addDoctorAvailabilities(DoctorAvailability... doctorAvailabilities) {
-        for (DoctorAvailability doctorAvailability : doctorAvailabilities) {
-            this.doctorAvailabilities.add(doctorAvailability);
-        }
+    public Gender getGender() {
+        return gender;
     }
 }

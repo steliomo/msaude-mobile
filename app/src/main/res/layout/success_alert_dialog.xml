@@ -29,7 +29,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/courgette"
         android:padding="5dp"
         android:textAlignment="center"
         android:textColor="#000"
@@ -40,14 +39,13 @@
 
     <Button
         android:id="@+id/success_alert_dialog_ok"
-        android:layout_width="150dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/round_green_layout"
         android:drawableEnd="@drawable/ic_circle_check"
         android:drawableRight="@drawable/ic_circle_check"
-        android:fontFamily="@font/courgette"
         android:paddingRight="10dp"
         android:text="Ok"
         android:textAllCaps="false"

@@ -38,5 +38,17 @@ public class AlertDialogManager {
                 }
             }
         });
+
+        Button noButton = dialog.findViewById(R.id.success_alert_dialog_no);
+        if (noButton == null) {
+            return;
+        }
+
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 }

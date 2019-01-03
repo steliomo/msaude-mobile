@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/exam_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#a90ca6"
+        android:fontFamily="@font/courgette"
+        android:padding="8dp"
+        android:textAlignment="textEnd"
+        android:textColor="#FFF"
+        android:textSize="7pt"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Tipo de Exame" />
+
+    <ImageView
+        android:id="@+id/exam_time_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/image_view_layout"
+        android:padding="4dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_time"
+        app:layout_constraintBottom_toBottomOf="@+id/exam_province_icon"
+        app:layout_constraintEnd_toStartOf="@+id/more_vertical"
+        app:layout_constraintStart_toEndOf="@+id/exam_province"
+        app:layout_constraintTop_toTopOf="@+id/exam_province_icon" />
+
+
+    <TextView
+        android:id="@+id/exam_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#8e0c00"
+        android:textSize="5pt"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/exam_time_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/exam_time_icon"
+        app:layout_constraintTop_toTopOf="@+id/exam_time_icon"
+        tools:text="11:45" />
+
+    <ImageView
+        android:id="@+id/exam_province_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/image_view_layout"
+        android:padding="4dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_province"
+        app:layout_constraintStart_toStartOf="@+id/exam_type"
+        app:layout_constraintTop_toBottomOf="@+id/exam_type" />
+
+    <TextView
+        android:id="@+id/exam_province"
+        android:layout_width="wrap_content"
+        android:layout_height="14dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="#000"
+        android:textSize="5pt"
+        app:layout_constraintBottom_toBottomOf="@+id/exam_province_icon"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/exam_province_icon"
+        app:layout_constraintTop_toTopOf="@+id/exam_province_icon"
+        tools:text="Província" />
+
+    <ImageView
+        android:id="@+id/exam_locality_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/image_view_layout"
+        android:padding="4dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_location"
+        app:layout_constraintStart_toStartOf="@+id/exam_province_icon"
+        app:layout_constraintTop_toBottomOf="@+id/exam_province_icon" />
+
+    <TextView
+        android:id="@+id/exam_locality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="#000"
+        android:textSize="5pt"
+        app:layout_constraintBottom_toBottomOf="@+id/exam_locality_icon"
+        app:layout_constraintStart_toEndOf="@+id/exam_locality_icon"
+        app:layout_constraintTop_toTopOf="@+id/exam_locality_icon"
+        tools:text="Localidade" />
+
+    <ImageView
+        android:id="@+id/exam_health_facility_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/image_view_layout"
+        android:padding="4dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_clinic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/exam_locality_icon"
+        app:layout_constraintTop_toBottomOf="@+id/exam_locality_icon" />
+
+    <TextView
+        android:id="@+id/exam_health_facility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="#000"
+        android:textSize="5pt"
+        app:layout_constraintBottom_toBottomOf="@+id/exam_health_facility_icon"
+        app:layout_constraintStart_toEndOf="@+id/exam_health_facility_icon"
+        app:layout_constraintTop_toTopOf="@+id/exam_health_facility_icon"
+        tools:text="Hospital Privado de Maputo" />
+
+    <ImageView
+        android:id="@+id/exam_date_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/image_view_layout"
+        android:padding="4dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_calendar_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/exam_locality_icon"
+        app:layout_constraintStart_toStartOf="@+id/exam_time_icon"
+        app:layout_constraintTop_toTopOf="@+id/exam_locality_icon" />
+
+    <TextView
+        android:id="@+id/exam_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="#000"
+        android:textSize="5pt"
+        app:layout_constraintBottom_toBottomOf="@+id/exam_date_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/exam_date_icon"
+        app:layout_constraintTop_toTopOf="@+id/exam_date_icon"
+        tools:text="01-10-2018" />
+
+    <ImageView
+        android:id="@+id/exam_patient_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/image_view_layout"
+        android:padding="4dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_patient"
+        app:layout_constraintBottom_toBottomOf="@+id/exam_health_facility_icon"
+        app:layout_constraintStart_toStartOf="@+id/exam_date_icon"
+        app:layout_constraintTop_toTopOf="@+id/exam_health_facility_icon" />
+
+    <TextView
+        android:id="@+id/exam_patient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="#000"
+        android:textSize="5pt"
+        app:layout_constraintBottom_toBottomOf="@+id/exam_patient_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/exam_patient_icon"
+        app:layout_constraintTop_toTopOf="@+id/exam_patient_icon"
+        tools:text="Paciente" />
+
+    <ImageView
+        android:id="@+id/line_divisor"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="#96adb9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon" />
+
+    <ImageView
+        android:id="@+id/more_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_more_vertical" />
+
+</android.support.constraint.ConstraintLayout>

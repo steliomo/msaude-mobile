@@ -3,6 +3,7 @@ package mz.co.msaude.mobile.activities;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,16 +22,18 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import mz.co.msaude.mobile.R;
 import mz.co.msaude.mobile.component.SaudeComponent;
-import mz.co.msaude.mobile.consultation.event.ConsultationTypeEvent;
+import mz.co.msaude.mobile.consultation.event.MedicalServiceTypeEvent;
 import mz.co.msaude.mobile.consultation.model.ConsultationFilter;
 import mz.co.msaude.mobile.consultation.model.QueryResult;
 import mz.co.msaude.mobile.consultation.service.ConsultationService;
-import mz.co.msaude.mobile.doctor.event.DoctorEvent;
 import mz.co.msaude.mobile.healthfacility.event.CityEvent;
 import mz.co.msaude.mobile.healthfacility.event.HealthFacilityEvent;
 import mz.co.msaude.mobile.validator.TextViewValidator;
 
 public class SearchConsultationActivity extends BaseAuthenticateActivity implements DatePickerDialog.OnDateSetListener {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.consultation_city)
     EditText consultationCity;
@@ -137,7 +140,7 @@ public class SearchConsultationActivity extends BaseAuthenticateActivity impleme
 
         Toast.makeText(this, "A pesquisar ....", Toast.LENGTH_SHORT).show();
 
-        QueryResult result = consultationService.findConsultationsByFilter(consultationFilter);
+        QueryResult result = null;
 
         Intent intent = new Intent(this, ScheduleConsultationActivity.class);
         intent.putExtra(ConsultationFilter.FILTER, consultationFilter);
@@ -172,26 +175,6 @@ public class SearchConsultationActivity extends BaseAuthenticateActivity impleme
         startActivity(new Intent(this, SelectConsultationTypeActivity.class));
     }
 
-    @OnClick(R.id.consultation_clinic)
-    public void onclickConsultationClinic() {
-        startActivity(new Intent(this, HealthFacilitySelectActivity.class));
-    }
-
-    @OnClick(R.id.consultation_clinic_btn)
-    public void onclickConsultationClinicBtn() {
-        startActivity(new Intent(this, HealthFacilitySelectActivity.class));
-    }
-
-    @OnClick(R.id.consultation_doctor)
-    public void onclickConsultationDoctor() {
-        startActivity(new Intent(this, SelectDoctorActivity.class));
-    }
-
-    @OnClick(R.id.consultation_doctor_btn)
-    public void onclickConsultationDoctorBtn() {
-        startActivity(new Intent(this, SelectDoctorActivity.class));
-    }
-
     @Subscribe
     public void onEvent(CityEvent cityEvent) {
         consultationFilter.setCity(cityEvent.getCity());
@@ -200,8 +183,8 @@ public class SearchConsultationActivity extends BaseAuthenticateActivity impleme
     }
 
     @Subscribe
-    public void onEvent(ConsultationTypeEvent consultationTypeEvent) {
-        consultationFilter.setConsultationType(consultationTypeEvent.getConsultationType().getConsultationType());
+    public void onEvent(MedicalServiceTypeEvent consultationTypeEvent) {
+        consultationFilter.setConsultationType(consultationTypeEvent.getMedicalServiceType().getName());
         consultationType.setText(consultationFilter.getConsultationType());
         consultationType.setError(null);
     }
@@ -209,13 +192,6 @@ public class SearchConsultationActivity extends BaseAuthenticateActivity impleme
     @Subscribe
     public void onEvent(HealthFacilityEvent healthFacilityEvent) {
         consultationFilter.setHealthFacility(healthFacilityEvent.getHealthFacilityDTO().getHealthFacility());
-        consultationClinic.setText(consultationFilter.getHealthFacility().getName());
-    }
-
-    @Subscribe
-    public void onEvent(DoctorEvent doctorEvent) {
-        consultationFilter.setDoctor(doctorEvent.getDoctorDTO().getDoctor());
-        consultationDoctor.setText(consultationFilter.getDoctor().getFullName());
     }
 
     @Override

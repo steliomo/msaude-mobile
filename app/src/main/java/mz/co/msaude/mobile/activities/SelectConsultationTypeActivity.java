@@ -10,7 +10,6 @@ import android.widget.ListView;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,10 +17,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnItemClick;
 import mz.co.msaude.mobile.R;
-import mz.co.msaude.mobile.adapter.ConsultationTypeAdapter;
+import mz.co.msaude.mobile.adapter.MedicalServiceTypeAdapter;
 import mz.co.msaude.mobile.component.SaudeComponent;
-import mz.co.msaude.mobile.consultation.event.ConsultationTypeEvent;
-import mz.co.msaude.mobile.consultation.model.ConsultationType;
+import mz.co.msaude.mobile.medicalservicetype.model.MedicalServiceType;
 
 
 public class SelectConsultationTypeActivity extends BaseAuthenticateActivity implements SearchView.OnQueryTextListener {
@@ -32,9 +30,9 @@ public class SelectConsultationTypeActivity extends BaseAuthenticateActivity imp
     @Inject
     EventBus eventBus;
 
-    private ConsultationTypeAdapter consultationTypeAdapter;
+    private MedicalServiceTypeAdapter consultationTypeAdapter;
 
-    private List<ConsultationType> consultationTypes;
+    private List<MedicalServiceType> consultationTypes;
 
     @Override
     public void onMhealthCreate(Bundle bundle) {
@@ -44,9 +42,7 @@ public class SelectConsultationTypeActivity extends BaseAuthenticateActivity imp
         SaudeComponent component = application.getComponent();
         component.inject(this);
 
-        consultationTypes = Arrays.asList(new ConsultationType("Cardiologia"), new ConsultationType("Medicina Geral"));
-        consultationTypeAdapter = new ConsultationTypeAdapter(this, consultationTypes);
-        itemSelectionList.setAdapter(consultationTypeAdapter);
+        consultationTypeAdapter = new MedicalServiceTypeAdapter(this, consultationTypes);
     }
 
     @Override
@@ -67,21 +63,19 @@ public class SelectConsultationTypeActivity extends BaseAuthenticateActivity imp
     @Override
     public boolean onQueryTextChange(String text) {
 
-        List<ConsultationType> newConsultationTypes = new ArrayList<>();
+        List<MedicalServiceType> newConsultationTypes = new ArrayList<>();
 
-        for (ConsultationType consultationType : this.consultationTypes) {
-            if (consultationType.getConsultationType().toLowerCase().contains(text.toLowerCase())) {
+        for (MedicalServiceType consultationType : this.consultationTypes) {
+            if (consultationType.getName().toLowerCase().contains(text.toLowerCase())) {
                 newConsultationTypes.add(consultationType);
             }
         }
 
-        consultationTypeAdapter.setFilter(newConsultationTypes);
         return true;
     }
 
     @OnItemClick(R.id.item_selection_list)
     public void onItemClick(int position) {
-        eventBus.post(new ConsultationTypeEvent(consultationTypeAdapter.getItem(position)));
         finish();
     }
 }

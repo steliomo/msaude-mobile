@@ -4,18 +4,19 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import mz.co.msaude.mobile.activities.ConsultationsActivity;
-import mz.co.msaude.mobile.activities.HealthFacilitySelectActivity;
+import mz.co.msaude.mobile.activities.ExamsActivity;
 import mz.co.msaude.mobile.activities.LoginActivity;
 import mz.co.msaude.mobile.activities.ScheduleConsultationActivity;
+import mz.co.msaude.mobile.activities.ScheduleExamActivity;
 import mz.co.msaude.mobile.activities.SearchConsultationActivity;
 import mz.co.msaude.mobile.activities.SelectCityActivity;
 import mz.co.msaude.mobile.activities.SelectConsultationTypeActivity;
-import mz.co.msaude.mobile.activities.SelectDoctorActivity;
+import mz.co.msaude.mobile.exam.fragment.ExamMainFragment;
 import mz.co.msaude.mobile.firebase.SaudeFirebaseMessagingService;
+import mz.co.msaude.mobile.fragment.ConsultationMainFragment;
 import mz.co.msaude.mobile.fragment.DoctorFragment;
 import mz.co.msaude.mobile.fragment.HealthFacilityFragment;
 import mz.co.msaude.mobile.fragment.ScheduleConfirmationFragment;
-import mz.co.msaude.mobile.fragment.TimeTableFragment;
 import mz.co.msaude.mobile.module.SaudeModule;
 
 /**
@@ -35,8 +36,6 @@ public interface SaudeComponent {
 
     void inject(ScheduleConfirmationFragment fragment);
 
-    void inject(TimeTableFragment fragment);
-
     void inject(SaudeFirebaseMessagingService service);
 
     void inject(ConsultationsActivity activity);
@@ -45,9 +44,13 @@ public interface SaudeComponent {
 
     void inject(SelectConsultationTypeActivity activity);
 
-    void inject(HealthFacilitySelectActivity activity);
-
-    void inject(SelectDoctorActivity activity);
-
     void inject(LoginActivity activity);
+
+    void inject(ConsultationMainFragment fragment);
+
+    void inject(ExamsActivity activity);
+
+    void inject(ScheduleExamActivity activity);
+
+    void inject(ExamMainFragment fragment);
 }

@@ -1,28 +1,18 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="6dp"
-    tools:context="mz.co.msaude.mobile.fragment.DoctorFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginBottom="2dp"
-        android:background="#ccc"
-        android:padding="3dp"
-        android:text="Médicos Disponíveis"
-        android:textAlignment="textEnd"
-        android:textColor="#0b5463"
-        android:textSize="7pt"
-        android:textStyle="bold" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_doctor_recycle_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/list_items_default" />
 
-    <ListView
-        android:id="@+id/fragment_doctors"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:listSelector="#d1ecff" />
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,85 +1,56 @@
 package mz.co.msaude.mobile.adapter;
 
 import android.content.Context;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 
-import butterknife.BindView;
 import mz.co.msaude.mobile.R;
 import mz.co.msaude.mobile.healthfacility.model.HealthFacility;
+import mz.co.msaude.mobile.holder.HealtFacilityViewHolder;
+import mz.co.msaude.mobile.listner.ClickListner;
 
 /**
  * Created by Stélio Moiane on 6/16/17.
  */
-public class HealthFacilityAdapter extends BaseAbstractAdapter implements FilterableAdapter<HealthFacility> {
-
-
-    @BindView(R.id.icon)
-    ImageView icon;
-
-    @BindView(R.id.health_facility_name)
-    TextView healtFacilityName;
-
-    @BindView(R.id.city)
-    TextView city;
-
-    @BindView(R.id.country)
-    TextView country;
+public class HealthFacilityAdapter extends RecyclerView.Adapter<HealtFacilityViewHolder> {
 
     private Context context;
 
     private List<HealthFacility> healthFacilities;
 
-    public HealthFacilityAdapter(Context context, List<HealthFacility> healthFacilities) {
+    private ClickListner listner;
+
+    public HealthFacilityAdapter(final Context context, List<HealthFacility> healthFacilities) {
         this.context = context;
         this.healthFacilities = healthFacilities;
     }
 
+    @NonNull
     @Override
-    public Context getContext() {
-        return context;
+    public HealtFacilityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.list_items_default, parent, false);
+        HealtFacilityViewHolder holder = new HealtFacilityViewHolder(view);
+        holder.setItemClicListner(listner);
+        return holder;
     }
 
     @Override
-    public int getResourceId() {
-        return R.layout.list_health_facilities;
-    }
-
-    @Override
-    public void onCreateView(int position) {
-
+    public void onBindViewHolder(@NonNull HealtFacilityViewHolder holder, int position) {
         HealthFacility healthFacility = healthFacilities.get(position);
-        icon.setImageResource(R.mipmap.ic_hospital);
-        healtFacilityName.setText(healthFacility.getName());
-
-        if (healthFacility.getCity() == null) {
-            return;
-        }
-
-        city.setText(healthFacility.getCity().getCity());
-        country.setText(healthFacility.getCity().getContry());
+        holder.bind(healthFacility);
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return healthFacilities.size();
     }
 
-    @Override
-    public HealthFacility getItem(int position) {
-        return healthFacilities.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return healthFacilities.get(position).hashCode();
-    }
-
-    @Override
-    public void setFilter(List<HealthFacility> items) {
-        this.healthFacilities = items;
-        notifyDataSetChanged();
+    public void setItemClickListner(ClickListner listner) {
+        this.listner = listner;
     }
 }

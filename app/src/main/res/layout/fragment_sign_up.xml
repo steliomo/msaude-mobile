@@ -31,7 +31,6 @@
             android:id="@+id/fragment_login_sign_up_header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/courgette"
             android:padding="8dp"
             android:text="Registo de novo utilizador"
             android:textAlignment="center"
@@ -123,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="Género:"
-                android:textSize="7pt" />
+                android:textSize="8pt" />
 
             <RadioButton
                 android:id="@+id/fragment_login_sign_up_male"
@@ -133,8 +132,9 @@
                 android:layout_weight="1"
                 android:checked="true"
                 android:drawableRight="@drawable/ic_male"
-                android:paddingRight="20dp"
-                android:text="Masculino" />
+                android:paddingRight="50dp"
+                android:text="M"
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/fragment_login_sign_up_female"
@@ -143,8 +143,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:drawableRight="@drawable/ic_female"
-                android:paddingRight="20dp"
-                android:text="Femenino" />
+                android:paddingRight="50dp"
+                android:text="F"
+                android:textStyle="bold" />
 
         </RadioGroup>
 
@@ -162,6 +163,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_calendar"
                 android:drawableStart="@drawable/ic_calendar"
+                android:focusableInTouchMode="false"
                 android:hint="Data de Nascimento"
                 android:inputType="date" />
 
@@ -237,7 +239,6 @@
             android:background="@drawable/round_green_layout"
             android:drawableEnd="@drawable/ic_circle_check"
             android:drawableRight="@drawable/ic_circle_check"
-            android:fontFamily="@font/courgette"
             android:paddingRight="10dp"
             android:text="Registar-se"
             android:textAllCaps="false"
@@ -258,7 +259,6 @@
             android:background="@drawable/round_red_layout"
             android:drawableEnd="@drawable/ic_circle_remove"
             android:drawableRight="@drawable/ic_circle_remove"
-            android:fontFamily="@font/courgette"
             android:paddingRight="10dp"
             android:text="Cancelar"
             android:textAllCaps="false"
